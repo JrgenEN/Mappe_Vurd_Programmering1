@@ -89,6 +89,14 @@ public class Dagbok
     this.posts.put(post.getDate(), post);
     System.out.flush();
   }
+
+  /**
+   * A function to add a predefined post
+   * @param author The person writing
+   * @param title Title of the post
+   * @param desc Text of the post
+   * @param date Date of the post
+   */
   public void addPost(String author, String title, String desc, String date){
     Posts post = new Posts(author, title, desc, date);
     posts.put(post.getDate(), post);
@@ -105,7 +113,7 @@ public class Dagbok
   }
 
   /**
-   * Prints all posts from newest to oldest
+   * Prints all posts
    */
   private void printAll()
   {
@@ -117,7 +125,7 @@ public class Dagbok
   }
 
   /**
-   * Removes posts from diary, need a date
+   * Removes posts from diary, need a date when the post was published
    * @param date When the post was created
    */
   private void removePosts(String date)

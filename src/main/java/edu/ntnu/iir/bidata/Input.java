@@ -9,7 +9,7 @@ import java.util.HashSet;
  *
  */
 public class Input {
-  private static Scanner input = new Scanner(System.in);
+  private final static Scanner input = new Scanner(System.in);
 
   /**
    * Gets a string of the input
@@ -32,9 +32,7 @@ public class Input {
     String inputLine = input.nextLine().trim().toLowerCase();
 
     String[] wordArray = inputLine.split(" ");
-    HashSet<String> words = new HashSet<>();
-    words.addAll(Arrays.asList(wordArray));
 
-    return words;
+    return new HashSet<>(Arrays.asList(wordArray));
   }
 }
