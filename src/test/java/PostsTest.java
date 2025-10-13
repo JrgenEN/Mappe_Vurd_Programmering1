@@ -5,24 +5,18 @@ import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
 
-
-public class dagbokTest
+public class PostsTest
 {
-  /**
-   * Fixture for the tests
-   */
   @Before
   public void setup(){
-  }
 
+  }
   @After
-  public void tearDown()
-  {
+  public void tearDown(){
 
   }
   @Test
-  public void testCreatingInnlegg()
-  {
+  public void testCreatePost(){
     Posts test = new Posts("Jørgen", "Title", "description");
     Assert.assertEquals("Jørgen", test.getAuthor());
     Assert.assertEquals("Title", test.getTitle());

@@ -1,13 +1,12 @@
 package edu.ntnu.iir.bidata;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 /**
- *
+ * This class handles posts
  */
 public class Posts
 {
@@ -17,6 +16,12 @@ public class Posts
   private String date;
   private String time;
 
+  /**
+   *
+   * @param author Name of the person adding post
+   * @param title Title of post
+   * @param description Text for the post
+   */
   public Posts(String author, String title, String description)
   {
     this.author = author;
@@ -28,6 +33,10 @@ public class Posts
     this.date = split[1];
     this.time = split[0];
   }
+
+  /**
+   * Prints the post in a clean and efficient way
+   */
   public void printPosts(){
     System.out.println(getTitle());
     System.out.println(getDescription());
@@ -35,18 +44,38 @@ public class Posts
     System.out.println("Time: " + time);
     System.out.println("Date: " + date);
   }
+
+  /**
+   *  Gets author
+   * @return author
+   */
   public String  getAuthor()
   {
     return this.author;
   }
+
+  /**
+   * Gets title
+   * @return title
+   */
   public String   getTitle()
   {
     return this.title;
   }
+
+  /**
+   * Gets description
+   * @return description
+   */
   public String   getDescription()
   {
     return this.description;
   }
+
+  /**
+   * Gets date
+   * @return date
+   */
   public String getDate() {
     return date;
   }
