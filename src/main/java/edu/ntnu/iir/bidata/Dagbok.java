@@ -2,7 +2,6 @@ package edu.ntnu.iir.bidata;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * @author jorge
@@ -13,8 +12,7 @@ import java.util.Iterator;
  */
 public class Dagbok
 {
-  private HashMap<String,Posts> posts;
-  private boolean started;
+  private final HashMap<String,Posts> posts;
 
   public Dagbok()
   {
@@ -26,7 +24,7 @@ public class Dagbok
    */
   public void start()
   {
-    started = true;
+    boolean started = true;
     System.out.println("Hello, welcome to the diary!");
     System.out.println("To add a paragraph write: Add");
     System.out.println("To print all posts write: All");
@@ -36,49 +34,31 @@ public class Dagbok
     while(started)
     {
       HashSet<String> words = Input.getInputSet();
-      Iterator<String> iterator = words.iterator();
 
-      while (iterator.hasNext())
-      {
-        String w = iterator.next();
-        if (w.equals("add"))
-        {
-          this.addPosts();
-        }
-        else if (w.equals("print"))
-        {
-          System.out.println("Write date of written post");
-          String date = Input.getInput();
+      for (String w : words) {
+        switch (w) {
+          case "add" -> this.addPosts();
+          case "print" -> {
+            System.out.println("Write date of written post");
+            String date = Input.getInput();
 
-          if(this.getPosts(date) != null)
-          {
-            this.getPosts(date).printPosts();
+            if (this.getPosts(date) != null) {
+              this.getPosts(date).printPosts();
+            } else {
+              System.out.println("No posts found");
+            }
           }
-          else
-          {
-            System.out.println("No posts found");
-          }
-        }
-        else if (w.equals("quit"))
-        {
-          started = false;
-        }
-        else if (w.equals("all"))
-        {
-          this.printAll();
-        }
-        else if (w.equals("remove"))
-        {
-          System.out.println("Write date of written post");
-          String date = Input.getInput();
+          case "quit" -> started = false;
+          case "all" -> this.printAll();
+          case "remove" -> {
+            System.out.println("Write date of written post");
+            String date = Input.getInput();
 
-          if(this.getPosts(date) != null)
-          {
-            this.removePosts(date);
-          }
-          else
-          {
-            System.out.println("No posts found");
+            if (this.getPosts(date) != null) {
+              this.removePosts(date);
+            } else {
+              System.out.println("No posts found");
+            }
           }
         }
       }
@@ -109,6 +89,10 @@ public class Dagbok
     this.posts.put(post.getDate(), post);
     System.out.flush();
   }
+  public void addPost(String author, String title, String desc, String date){
+    Posts post = new Posts(author, title, desc, date);
+    posts.put(post.getDate(), post);
+  }
 
   /**
    * Gets a post from the diary
@@ -128,6 +112,7 @@ public class Dagbok
     for (Posts p : this.posts.values())
     {
       p.printPosts();
+      System.out.println();
     }
   }
 

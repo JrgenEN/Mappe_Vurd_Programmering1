@@ -10,11 +10,11 @@ import java.time.format.DateTimeFormatter;
  */
 public class Posts
 {
-  private String author;
-  private String title;
-  private String description;
-  private String date;
-  private String time;
+  private final String author;
+  private final String title;
+  private final String description;
+  private final String date;
+  private final String time;
 
   /**
    *
@@ -31,6 +31,17 @@ public class Posts
     String dateTime = LocalDateTime.now().format(formatter);
     String[] split = dateTime.split(" ");
     this.date = split[1];
+    this.time = split[0];
+  }
+  public Posts(String author, String title, String description, String date)
+  {
+    this.author = author;
+    this.title = title;
+    this.description = description;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+    String dateTime = LocalDateTime.now().format(formatter);
+    String[] split = dateTime.split(" ");
+    this.date = date;
     this.time = split[0];
   }
 
