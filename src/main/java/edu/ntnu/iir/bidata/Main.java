@@ -6,7 +6,7 @@ package edu.ntnu.iir.bidata;
 public class Main {
   public static void main(String[] args)
   {
-    Time test = new Time();
-    System.out.println(test.getClock() + "\n" + test.getDate());
+    DiaryInterface.init();
+    DiaryInterface.start();
   }
 }
