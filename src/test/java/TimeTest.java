@@ -20,4 +20,18 @@ public class TimeTest {
     Assert.assertEquals(testTime, test.getClock());
     Assert.assertEquals(testDate, test.getDate());
   }
+  @Test
+  public void TestCreateInvalidDate(){
+    String testTime = "14:54";
+    String testDate = "Invalid";
+    Time test = new Time(testTime, testDate);
+    Assert.assertNull(test.getDate());
+  }
+  @Test
+  public void TestCreateInvalidTime(){
+    String testTime = "Invalid";
+    String testDate = "13.10.2025";
+    Time test = new Time(testTime, testDate);
+    Assert.assertNull(test.getClock());
+  }
 }

@@ -31,4 +31,26 @@ public class DiaryTest {
   public void TestGettingOnePost(){
     Assert.assertNotEquals(null, test.getPost("13.10.2025"));
   }
+
+  @Test
+  public void TestRemovingPost(){
+    String date = "10.10.2025";
+    test.removePost(date);
+    Assert.assertNull(test.getPost(date));
+  }
+  @Test
+  public void TestAddingAExistingElement(){
+    test.addPost("Invalid","invalid","invalid","10:55", "13.10.2025");
+    Assert.assertNotEquals("Invalid", test.getPost("13.10.2025").getAuthor());
+  }
+  @Test
+  public void  TestAddingInvalidDate(){
+    test.addPost("Invalid","invalid","invalid","10:55", "Invalid");
+    Assert.assertNull("Not null", test.getPost("Invalid"));
+  }
+  @Test
+  public void TestAddingInvalidTime(){
+    test.addPost("Invalid","invalid","invalid","Invalid", "01.10.2025");
+    Assert.assertNull(test.getPost("01.10.2025"));
+  }
 }

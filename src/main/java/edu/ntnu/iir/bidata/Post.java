@@ -1,6 +1,11 @@
 package edu.ntnu.iir.bidata;
 
-// Todo Add comments to class
+/**
+ * Class to handle posts
+ * @author jorge
+ * @version 1.0
+ * @see Time
+ */
 public class Post {
   private final String author;
   private final String title;
@@ -62,6 +67,9 @@ public class Post {
       }
   }
 
+  /**
+   * Prints the post in format
+   */
   public void printPost() {
     System.out.println(this.getTitle());
     System.out.println(this.getText());

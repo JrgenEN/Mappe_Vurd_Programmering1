@@ -5,8 +5,12 @@ import java.util.Scanner;
 import java.util.HashSet;
 
 /**
- * Static class for user input.
- *
+ * Static class to handle user input
+ * @author jorge
+ * @version 1.0
+ * @see Scanner
+ * @see Arrays
+ * @see HashSet
  */
 public class Input {
   private final static Scanner input = new Scanner(System.in);
