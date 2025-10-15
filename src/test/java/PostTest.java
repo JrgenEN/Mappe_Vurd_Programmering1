@@ -1,6 +1,6 @@
 import edu.ntnu.iir.bidata.Post;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class PostTest {
 

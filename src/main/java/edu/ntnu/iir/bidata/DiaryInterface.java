@@ -1,8 +1,13 @@
 package edu.ntnu.iir.bidata;
+
 import java.util.HashSet;
 
 /**
+ * Diary interface.
+ *
+ *
  * @author jorge
+ *
  * @version 1.0
  * @since 1.0
  * @see Diary
@@ -13,10 +18,9 @@ public class DiaryInterface {
   private static Diary diary;
 
   /**
-   * Initialize the Interface
+   * Initialize the Interface.
    */
-  public static void init()
-  {
+  public static void init() {
     diary = new Diary();
     System.out.println("Hello, welcome to the diary!");
     System.out.println("To add a paragraph write: Add");
@@ -30,11 +34,10 @@ public class DiaryInterface {
   /**
    * Start function. Starts the program interface.
    */
-  public static void start()
-  {
+  public static void start() {
     boolean started = true;
-    while(started)
-    {
+
+    while (started) {
       HashSet<String> words = Input.getInputSet();
       for (String w : words) {
         switch (w) {
@@ -44,15 +47,16 @@ public class DiaryInterface {
           case "remove" -> remove();
           case "forgot" -> forgot();
           case "quit" -> started = false;
+          default -> System.out.println("Invalid option.");
         }
       }
     }
   }
 
   /**
-   * Function to handle prints of posts
+   * Function to handle prints of posts.
    */
-  private static void print(){
+  private static void print() {
     System.out.println("Write date of written post\nUse format dd.mm.yyyy");
     String date = Input.getInput();
 
@@ -65,9 +69,9 @@ public class DiaryInterface {
   }
 
   /**
-   * Function to handle removing of posts
+   * Function to handle removing of posts.
    */
-  private static void remove(){
+  private static void remove() {
     System.out.println("Write date of written post\nUse format dd.mm.yyyy");
     String date = Input.getInput();
 
@@ -79,9 +83,9 @@ public class DiaryInterface {
   }
 
   /**
-   * Function to handle printing of all posts
+   * Function to handle printing of all posts.
    */
-  private static void all(){
+  private static void all() {
     diary.getAllPosts().forEach((post -> {
       post.printPost();
       System.out.println();
@@ -89,9 +93,9 @@ public class DiaryInterface {
   }
 
   /**
-   * Function to handle adding of posts to the diary
+   * Function to handle adding of posts to the diary.
    */
-  private static void add(){
+  private static void add() {
     System.out.println("Author: ");
     String author = Input.getInput();
     System.out.println("Title: ");
@@ -105,13 +109,13 @@ public class DiaryInterface {
    * Function to handle forgotten dates.
    * Adds a post on a specified day, month & year.
    */
-  private static void forgot(){
+  private static void forgot() {
     System.out.println("Author: ");
-    String author = Input.getInput();
+    final String author = Input.getInput();
     System.out.println("Title: ");
-    String title = Input.getInput();
+    final String title = Input.getInput();
     System.out.println("Text: ");
-    String text = Input.getInput();
+    final String text = Input.getInput();
     System.out.println("Forgotten Date\nUse format dd.mm.yyyy");
     String date = Input.getInput();
     String time = new Time().getClock();
