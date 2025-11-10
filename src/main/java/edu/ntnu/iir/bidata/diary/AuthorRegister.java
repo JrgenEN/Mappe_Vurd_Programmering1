@@ -1,19 +1,19 @@
 package edu.ntnu.iir.bidata.diary;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Author Registry
+ * Class to make an author register of all authors, and creates a diary for each new author.
  *
  * @author Jørgen
- * @see HashMap
+ * @see Author
  * @see Diary
+ * @see HashMap
  * @see Collection
+ * @version 2.0
  */
 public class AuthorRegister
 {
-  private final HashMap<String, Diary>  authorsDiary;
+  private final HashMap<Author, Diary>  authorsDiary;
 
   /**
    * Constructor.
@@ -23,14 +23,29 @@ public class AuthorRegister
   }
 
   /**
-   * Add a diary post to a author diary.
+   * Gets an {@code Map} of the stats of each {@code Author}.
    *
    *
-   * @param post Add the post
+   * @return {@code Map<String, Integer>}
+   */
+  public Map<String, Integer> getStatistics() {
+    Map<String, Integer> statistics = new HashMap<>();
+
+    for (Map.Entry<Author, Diary> entry : authorsDiary.entrySet()) {
+      statistics.put(entry.getKey().getName(), entry.getValue().getAllPosts().size());
+    }
+    return statistics;
+  }
+
+  /**
+   * Add a diary post to an {@code Author} {@code Diary}.
+   *
+   *
+   * @param post Add the {@code Post} to the {@code Diary}.
    */
   public void addDiaryPost(Post post){
-    if (this.authorsDiary.containsKey(post.getAuthor())) {
-      this.authorsDiary.get(post.getAuthor()).addPost(post);
+    if (this.authorsDiary.containsKey(this.getAuthorByName(post.getAuthor().getName()))) {
+      this.authorsDiary.get(this.getAuthorByName(post.getAuthor().getName())).addPost(post);
     }
     else {
       Diary diary = new Diary();
@@ -40,25 +55,60 @@ public class AuthorRegister
   }
 
   /**
-   * Gets a diary with the author.
+   * Gets a {@code Diary} with the {@code Author}.
    *
    *
-   * @param author Author name.
-   * @return The diary 
+   * @param name {@code Author} name.
+   * @return The {@code Diary}
    */
-  public Diary getDiary(String author){
-    if (this.authorsDiary.containsKey(author)) {
-      return this.authorsDiary.get(author);
+  public Diary getDiary(String name) {
+    for (Map.Entry<Author, Diary> author : this.authorsDiary.entrySet()) {
+      if (author.getKey().getName().equals(name)) {
+        return author.getValue();
+      }
     }
     return null;
   }
 
+  /**
+   * Gets a {@code Collection<>()} of all diary's.
+   *
+   *
+   * @return Returns a {@code Collection<>()} of Diary's.
+   */
   public Collection<Diary> getAllDiary(){
     return this.authorsDiary.values();
   }
 
-  public Set<String> getAuthors(){
+  /**
+   * Gets a {@code Set<>} of names to Authors.
+   *
+   *
+   * @return Returns a {@code Set<>} of names to Authors.
+   */
+  public Set<String> getAuthorsName(){
+    Set<String> names = new HashSet<>();
+    for (Author author : this.authorsDiary.keySet()) {
+      names.add(author.getName());
+    }
+    return names;
+  }
 
-    return this.authorsDiary.keySet();
+  /**
+   * Gets the {@code Author} by {@code String} name.
+   * Private so it's not available.
+   *
+   *
+   * @param name Name for {@code Author} as {@code String}.
+   * @return {@code Author} if name is valid or {@code null} if not valid.
+   */
+  private Author getAuthorByName(String name) {
+    String formattedName = new Author(name).getName();
+    for (Map.Entry<Author, Diary> author : this.authorsDiary.entrySet()) {
+      if (author.getKey().getName().equals(formattedName)) {
+        return author.getKey();
+      }
+    }
+    return null;
   }
 }
