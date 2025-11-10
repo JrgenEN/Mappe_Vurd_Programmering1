@@ -1,4 +1,4 @@
-import edu.ntnu.iir.bidata.Post;
+import edu.ntnu.iir.bidata.diary.Post;
 import org.junit.Assert;
 import org.junit.Test;
 

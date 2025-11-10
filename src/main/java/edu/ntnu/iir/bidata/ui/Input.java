@@ -1,12 +1,12 @@
-package edu.ntnu.iir.bidata;
+package edu.ntnu.iir.bidata.ui;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Scanner;
+import java.util.HashSet;
 
 /**
- * Static class to handle user inp.
+ * Static class to handle user input.
  *
  *
  * @author jorge
@@ -15,37 +15,37 @@ import java.util.Scanner;
  * @see Scanner
  * @see Arrays
  * @see HashSet
- * @see Set
  */
 public class Input {
   private static final Scanner inp = new Scanner(System.in);
 
-  private Input(){}
+  private Input() {}
 
   /**
    * Gets a string of the input.
    *
    *
-   * @return in calls getInput to loop or returns in
+   * @return Loops function if empty otherwise returns input.
    */
   public static String getInput() {
+
     System.out.print("> ");
     String in = inp.nextLine();
     return in.isEmpty() ? getInput() : in;
   }
 
   /**
-   * Gets a HashSet of user inp. Uses delimiter " ".
+   * Gets a HashSet of user input. Uses delimiter " ".
    *
    *
-   * @return words Returns a HashSet of the inp.
+   * @return words Returns a HashSet of the input.
    */
   public static Set<String> getInputSet() {
     System.out.print("> ");
 
-    String inpLine = inp.nextLine().trim().toLowerCase();
+    String inputLine = inp.nextLine().trim().toLowerCase();
 
-    String[] wordArray = inpLine.split(" ");
+    String[] wordArray = inputLine.split(" ");
 
     return new HashSet<>(Arrays.asList(wordArray));
   }

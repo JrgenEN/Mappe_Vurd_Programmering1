@@ -1,6 +1,6 @@
-import edu.ntnu.iir.bidata.Diary;
-import edu.ntnu.iir.bidata.Post;
 import java.util.Collection;
+import edu.ntnu.iir.bidata.diary.Diary;
+import edu.ntnu.iir.bidata.diary.Post;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class DiaryTest {
   @Test
   public void TestGettingAllPosts() {
     Collection<Post> posts = test.getAllPosts();
-    Assert.assertNotNull("No posts found", posts);
+    Assert.assertNotNull(posts);
     for (Post temp : posts) {
       temp.printPost();
       System.out.println();
@@ -35,16 +35,25 @@ public class DiaryTest {
   public void TestRemovingPost() {
     String date = "10.10.2025";
     test.removePost(date);
-    Assert.assertTrue(test.getPost(date).isEmpty());
+    Assert.assertNull("Failed removing", test.getPost(date));
+  }
+  @Test
+  public void TestAddingAExistingElement() {
+    test.addPost("Invalid","invalid","invalid","10:55", "13.10.2025");
+    Assert.assertNotEquals("Invalid", test.getPost("13.10.2025").getAuthor());
   }
   @Test
   public void  TestAddingInvalidDate() {
     test.addPost("Invalid","invalid","invalid","10:55", "Invalid");
-    Assert.assertTrue("Still added", test.getPost("Invalid").isEmpty());
+    Assert.assertNull("Not null", test.getPost("Invalid"));
   }
   @Test
   public void TestAddingInvalidTime() {
     test.addPost("Invalid","invalid","invalid","Invalid", "01.10.2025");
-    Assert.assertTrue(test.getPost("01.10.2025").isEmpty() );
+    Assert.assertNull(test.getPost("01.10.2025"));
+  }
+  @Test
+  public void TestFindByKeyword(){
+    Assert.assertNotNull("Couldnt find post by right keyword.", test.getPostByKeyWord("test"));
   }
 }

@@ -1,4 +1,4 @@
-import edu.ntnu.iir.bidata.Time;
+import edu.ntnu.iir.bidata.diary.Time;
 import org.junit.Assert;
 import org.junit.Test;
 
