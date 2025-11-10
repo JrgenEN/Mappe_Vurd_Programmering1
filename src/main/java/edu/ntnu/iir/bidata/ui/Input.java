@@ -1,8 +1,9 @@
-package edu.ntnu.iir.bidata;
+package edu.ntnu.iir.bidata.ui;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.Scanner;
+import java.util.HashSet;
 
 /**
  * Static class to handle user input.
@@ -16,17 +17,20 @@ import java.util.Scanner;
  * @see HashSet
  */
 public class Input {
-  private static final Scanner input = new Scanner(System.in);
+  private static final Scanner inp = new Scanner(System.in);
+
+  private Input() {}
 
   /**
    * Gets a string of the input.
    *
    *
-   * @return in calls getInput to loop or returns in
+   * @return Loops function if empty otherwise returns input.
    */
   public static String getInput() {
+
     System.out.print("> ");
-    String in = input.nextLine();
+    String in = inp.nextLine();
     return in.isEmpty() ? getInput() : in;
   }
 
@@ -36,10 +40,10 @@ public class Input {
    *
    * @return words Returns a HashSet of the input.
    */
-  public static HashSet<String> getInputSet() {
+  public static Set<String> getInputSet() {
     System.out.print("> ");
 
-    String inputLine = input.nextLine().trim().toLowerCase();
+    String inputLine = inp.nextLine().trim().toLowerCase();
 
     String[] wordArray = inputLine.split(" ");
 

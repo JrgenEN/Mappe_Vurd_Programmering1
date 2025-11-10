@@ -1,8 +1,8 @@
-package edu.ntnu.iir.bidata;
+package edu.ntnu.iir.bidata.diary;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Class to make a diary with an HashMap of Posts.
@@ -23,7 +23,7 @@ public class Diary {
    * Constructor For diary. Initializing posts to a new HashMap.
    */
   public Diary() {
-    this.posts = new HashMap<>();
+      this.posts = new HashMap<>();
   }
 
   /**
@@ -37,13 +37,45 @@ public class Diary {
   public void addPost(String author, String title, String text) {
     String date = new Time().getDate();
     if (!posts.containsKey(date)) {
-      this.posts.put(date, new Post(author, title, text));
+      Post post = new Post(author, title, text);
+      this.posts.put(date, post);
       System.out.println("Post added successfully");
-    } else {
+    }
+    else {
       System.out.println("Error!\nAlready a post on this date!\n");
     }
   }
 
+  /**
+   *
+   * @param post
+   */
+  public void addPost(Post post)
+  {
+    if (!posts.containsKey(post.getDate())) {
+      posts.put(post.getDate(), post);
+      System.out.println("Post added successfully");
+    }
+    else{
+      System.out.println("Error!\nAlready a post on this date!\n");
+    }
+  }
+
+  /**
+   *
+   * @param post
+   * @param date
+   */
+  public void addPost(Post post, String date) {
+    if (!posts.containsKey(date)) {
+      post.setDate(date);
+      posts.put(date, post);
+      System.out.println("Post added successfully");
+    }
+    else{
+      System.out.println("Error!\nAlready a post on this date!\n");
+    }
+  }
   /**
    * Add a post to the diary.
    *
@@ -70,7 +102,8 @@ public class Diary {
         System.out.println("Invalid time!");
       }
     } else {
-      this.posts.put(date, new Post(author, title, text, time, date));
+      Post post = new Post(author, title, text, time, date);
+      this.posts.put(date, post);
       System.out.println("Post added successfully");
     }
   }
@@ -89,6 +122,34 @@ public class Diary {
     return null;
   }
 
+  public Post getPostByKeyWord(String keyword)
+  {
+    for (Post post : this.getAllPosts()) {
+      if (post.getText().contains(keyword)) {
+        return post;
+      }
+    }
+    return null;
+  }
+
+
+  public Collection<Post> getPostBetweenDates(Time start, Time end) {
+    List<Post> allPosts = new ArrayList<>();
+
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    LocalDate startDate = start.toLocalDate();
+    LocalDate endDate = end.toLocalDate();
+
+    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+      Post post = this.getPost(date.format(fmt));
+      if (post != null) {
+        allPosts.add(post);
+      }
+    }
+
+    return allPosts;
+  }
+
   /**
    * Gets all the posts in the diary.
    *
@@ -97,7 +158,7 @@ public class Diary {
    *
    */
   public Collection<Post> getAllPosts() {
-    return this.posts.values();
+      return this.posts.values();
   }
 
   /**
@@ -113,7 +174,5 @@ public class Diary {
     } else {
       System.out.println("No posts on this date!");
     }
-
-
   }
 }

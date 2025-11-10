@@ -1,6 +1,6 @@
-import edu.ntnu.iir.bidata.Diary;
-import edu.ntnu.iir.bidata.Post;
 import java.util.Collection;
+import edu.ntnu.iir.bidata.diary.Diary;
+import edu.ntnu.iir.bidata.diary.Post;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class DiaryTest {
   @Test
   public void TestGettingAllPosts() {
     Collection<Post> posts = test.getAllPosts();
-
+    Assert.assertNotNull(posts);
     for (Post temp : posts) {
       temp.printPost();
       System.out.println();
@@ -35,7 +35,7 @@ public class DiaryTest {
   public void TestRemovingPost() {
     String date = "10.10.2025";
     test.removePost(date);
-    Assert.assertNull(test.getPost(date));
+    Assert.assertNull("Failed removing", test.getPost(date));
   }
   @Test
   public void TestAddingAExistingElement() {
@@ -51,5 +51,9 @@ public class DiaryTest {
   public void TestAddingInvalidTime() {
     test.addPost("Invalid","invalid","invalid","Invalid", "01.10.2025");
     Assert.assertNull(test.getPost("01.10.2025"));
+  }
+  @Test
+  public void TestFindByKeyword(){
+    Assert.assertNotNull("Couldnt find post by right keyword.", test.getPostByKeyWord("test"));
   }
 }

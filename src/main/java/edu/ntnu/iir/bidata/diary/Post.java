@@ -1,4 +1,4 @@
-package edu.ntnu.iir.bidata;
+package edu.ntnu.iir.bidata.diary;
 
 /**
  * Class to handle posts.
@@ -119,5 +119,15 @@ public class Post {
     } else {
       this.text = text;
     }
+  }
+
+  /**
+   * Setter for date.
+   *
+   *
+   * @param date new date.
+   */
+  public void setDate(String date){
+    this.dateTime.setDate(date);
   }
 }
