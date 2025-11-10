@@ -1,6 +1,8 @@
 package edu.ntnu.iir.bidata;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Diary interface.
@@ -16,6 +18,8 @@ import java.util.HashSet;
  */
 public class DiaryInterface {
   private static Diary diary;
+
+  private DiaryInterface(){}
 
   /**
    * Initialize the Interface.
@@ -38,7 +42,7 @@ public class DiaryInterface {
     boolean started = true;
 
     while (started) {
-      HashSet<String> words = Input.getInputSet();
+      Set<String> words = Input.getInputSet();
       for (String w : words) {
         switch (w) {
           case "add" -> add();
@@ -59,10 +63,14 @@ public class DiaryInterface {
   private static void print() {
     System.out.println("Write date of written post\nUse format dd.mm.yyyy");
     String date = Input.getInput();
+    Collection<Post> posts = diary.getPost(date);
 
-    if (diary.getAllPosts().contains(diary.getPost(date))) {
-      System.out.println("Getting post at date: " + date);
-      diary.getPost(date).printPost();
+    if (!posts.isEmpty()) {
+      System.out.println("Getting posts at date: " + date);
+      posts.forEach(post -> {
+        System.out.println(post);
+        post.printPost();
+      });
     } else {
       System.out.println("No posts found");
     }

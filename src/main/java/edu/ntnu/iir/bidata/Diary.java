@@ -1,7 +1,7 @@
 package edu.ntnu.iir.bidata;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,18 +12,18 @@ import java.util.List;
  *
  * @version 1.0
  * @see Post
- * @see HashMap
+ * @see ArrayList
  * @see Collection
  * @see List
  */
 public class Diary {
-  private final HashMap<String, Post> posts;
+  private final ArrayList<Post> posts;
 
   /**
    * Constructor For diary. Initializing posts to a new HashMap.
    */
   public Diary() {
-    this.posts = new HashMap<>();
+    this.posts = new ArrayList<>();
   }
 
   /**
@@ -35,13 +35,8 @@ public class Diary {
    * @param text Text of the post
    */
   public void addPost(String author, String title, String text) {
-    String date = new Time().getDate();
-    if (!posts.containsKey(date)) {
-      this.posts.put(date, new Post(author, title, text));
-      System.out.println("Post added successfully");
-    } else {
-      System.out.println("Error!\nAlready a post on this date!\n");
-    }
+    this.posts.add(new Post(author, title, text));
+    System.out.println("Post added successfully");
   }
 
   /**
@@ -57,12 +52,8 @@ public class Diary {
   public void addPost(String author, String title, String text, String time, String date) {
     Time test = new Time(time, date);
 
-    if (posts.containsKey(date) || test.getDate() == null || test.getClock() == null) {
+    if (test.getDate() == null || test.getClock() == null) {
       System.out.println("Error!");
-
-      if (posts.containsKey(date)) {
-        System.out.println("Already a post on this date!");
-      }
       if (test.getDate() == null) {
         System.out.println("Invalid date!");
       }
@@ -70,7 +61,7 @@ public class Diary {
         System.out.println("Invalid time!");
       }
     } else {
-      this.posts.put(date, new Post(author, title, text, time, date));
+      this.posts.add(new Post(author, title, text, time, date));
       System.out.println("Post added successfully");
     }
   }
@@ -80,13 +71,19 @@ public class Diary {
    *
    *
    * @param date The date of the wanted post
-   * @return The post on the date specified or null if not a valid date
+   * @return A Collection of posts on the date, and an empty collection if no posts
    */
-  public Post getPost(String date) {
-    if (this.posts.get(date) != null) {
-      return this.posts.get(date);
+  public Collection<Post> getPost(String date) {
+    Collection<Post> getPostContainer = new ArrayList<>();
+    for (Post post : this.posts)
+    {
+      if (post.getDate().equals(date))
+      {
+        getPostContainer.add(post);
+      }
     }
-    return null;
+    return getPostContainer;
+
   }
 
   /**
@@ -97,7 +94,8 @@ public class Diary {
    *
    */
   public Collection<Post> getAllPosts() {
-    return this.posts.values();
+
+    return this.posts;
   }
 
   /**
@@ -107,13 +105,8 @@ public class Diary {
    * @param date Date of the post
    */
   public void removePost(String date) {
-    if (this.posts.get(date) != null) {
-      this.posts.remove(date);
-      System.out.println("Post removed");
-    } else {
-      System.out.println("No posts on this date!");
+    if (this.getPost(date) != null) {
+      this.posts.removeAll(this.getPost(date));
     }
-
-
   }
 }

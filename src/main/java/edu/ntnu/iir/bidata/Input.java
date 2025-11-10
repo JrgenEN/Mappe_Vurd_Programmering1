@@ -2,10 +2,11 @@ package edu.ntnu.iir.bidata;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.Scanner;
 
 /**
- * Static class to handle user input.
+ * Static class to handle user inp.
  *
  *
  * @author jorge
@@ -14,9 +15,12 @@ import java.util.Scanner;
  * @see Scanner
  * @see Arrays
  * @see HashSet
+ * @see Set
  */
 public class Input {
-  private static final Scanner input = new Scanner(System.in);
+  private static final Scanner inp = new Scanner(System.in);
+
+  private Input(){}
 
   /**
    * Gets a string of the input.
@@ -26,22 +30,22 @@ public class Input {
    */
   public static String getInput() {
     System.out.print("> ");
-    String in = input.nextLine();
+    String in = inp.nextLine();
     return in.isEmpty() ? getInput() : in;
   }
 
   /**
-   * Gets a HashSet of user input. Uses delimiter " ".
+   * Gets a HashSet of user inp. Uses delimiter " ".
    *
    *
-   * @return words Returns a HashSet of the input.
+   * @return words Returns a HashSet of the inp.
    */
-  public static HashSet<String> getInputSet() {
+  public static Set<String> getInputSet() {
     System.out.print("> ");
 
-    String inputLine = input.nextLine().trim().toLowerCase();
+    String inpLine = inp.nextLine().trim().toLowerCase();
 
-    String[] wordArray = inputLine.split(" ");
+    String[] wordArray = inpLine.split(" ");
 
     return new HashSet<>(Arrays.asList(wordArray));
   }
