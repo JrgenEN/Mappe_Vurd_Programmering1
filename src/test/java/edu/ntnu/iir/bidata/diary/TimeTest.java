@@ -1,14 +1,15 @@
-import edu.ntnu.iir.bidata.diary.Time;
-import org.junit.Assert;
+package edu.ntnu.iir.bidata.diary;
+
 import org.junit.Test;
 
-public class TimeTest {
+import static org.junit.Assert.*;
 
+public class TimeTest {
   @Test
   public void TestCreateTimeEmptyBrackets() {
     String dateToday = new Time().getDate();
     Time test = new Time();
-    Assert.assertEquals(dateToday, test.getDate());
+    assertEquals(dateToday, test.getDate());
   }
 
   @Test
@@ -16,8 +17,8 @@ public class TimeTest {
     String testTime = "14:54";
     String testDate = "13.10.2025";
     Time test = new Time(testTime, testDate);
-    Assert.assertEquals(testTime, test.getClock());
-    Assert.assertEquals(testDate, test.getDate());
+    assertEquals(testTime, test.getClock());
+    assertEquals(testDate, test.getDate());
   }
 
   @Test
@@ -25,7 +26,7 @@ public class TimeTest {
     String testTime = "14:54";
     String testDate = "Invalid";
     Time test = new Time(testTime, testDate);
-    Assert.assertNull(test.getDate());
+    assertNull(test.getDate());
   }
 
   @Test
@@ -33,6 +34,6 @@ public class TimeTest {
     String testTime = "Invalid";
     String testDate = "13.10.2025";
     Time test = new Time(testTime, testDate);
-    Assert.assertNull(test.getClock());
+    assertNull(test.getClock());
   }
 }

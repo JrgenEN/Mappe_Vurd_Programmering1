@@ -8,9 +8,10 @@ package edu.ntnu.iir.bidata.diary;
  *
  * @version 1.0
  * @see Time
+ * @see Author
  */
 public class Post {
-  private String author;
+  private Author author;
   private String title;
   private String text;
   private final Time dateTime;
@@ -53,12 +54,12 @@ public class Post {
   public void printPost() {
     System.out.println(this.getTitle());
     System.out.println(this.getText());
-    System.out.println("Author: " + this.getAuthor());
+    System.out.println("Author: " + this.getAuthor().getName());
     System.out.println(this.getClock() + " " + this.getDate());
   }
   // Getters for posts.
 
-  public String getAuthor() {
+  public Author getAuthor() {
     return this.author;
   }
 
@@ -83,13 +84,16 @@ public class Post {
    *
    *
    * @param auth Author name.
-   *
    */
   public void setAuthor(String auth) {
-    if (auth.isEmpty()) {
-      this.author = "Author";
-    } else {
-      this.author = auth;
+    try {
+      this.author = new Author(auth);
+      if (this.author.getName().isEmpty()) throw new IllegalArgumentException("Author name is empty");
+      else {
+        this.author =  new Author(auth);
+      }
+    } catch (Exception e) {
+      this.author = new Author("Author");
     }
   }
 

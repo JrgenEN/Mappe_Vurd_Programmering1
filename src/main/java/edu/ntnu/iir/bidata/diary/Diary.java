@@ -10,13 +10,16 @@ import java.util.*;
  *
  * @author jorge
  *
- * @version 1.0
+ * @version 2.0
  * @see Post
  * @see HashMap
  * @see Collection
  * @see List
+ * @since 1.0
  */
 public class Diary {
+  private static final String POST_ADDED = "Post added successfully";
+  private static final String POST_ALREADY_EXIST = "Error!\nAlready a post on this date!\n";
   private final HashMap<String, Post> posts;
 
   /**
@@ -39,43 +42,30 @@ public class Diary {
     if (!posts.containsKey(date)) {
       Post post = new Post(author, title, text);
       this.posts.put(date, post);
-      System.out.println("Post added successfully");
+      System.out.println(POST_ADDED);
     }
     else {
-      System.out.println("Error!\nAlready a post on this date!\n");
+      System.out.println(POST_ALREADY_EXIST);
     }
   }
 
   /**
+   * Adds a post to the diary.
    *
-   * @param post
+   *
+   * @param post Post you want to add to the diary.
    */
   public void addPost(Post post)
   {
     if (!posts.containsKey(post.getDate())) {
       posts.put(post.getDate(), post);
-      System.out.println("Post added successfully");
+      System.out.println(POST_ADDED);
     }
     else{
-      System.out.println("Error!\nAlready a post on this date!\n");
+      System.out.println(POST_ALREADY_EXIST);
     }
   }
 
-  /**
-   *
-   * @param post
-   * @param date
-   */
-  public void addPost(Post post, String date) {
-    if (!posts.containsKey(date)) {
-      post.setDate(date);
-      posts.put(date, post);
-      System.out.println("Post added successfully");
-    }
-    else{
-      System.out.println("Error!\nAlready a post on this date!\n");
-    }
-  }
   /**
    * Add a post to the diary.
    *
@@ -104,7 +94,7 @@ public class Diary {
     } else {
       Post post = new Post(author, title, text, time, date);
       this.posts.put(date, post);
-      System.out.println("Post added successfully");
+      System.out.println(POST_ADDED);
     }
   }
 
@@ -122,6 +112,13 @@ public class Diary {
     return null;
   }
 
+  /**
+   * Search for posts with keyword.
+   *
+   *
+   * @param keyword Keyword you want to search for.
+   * @return Returns the post, and null if no posts.
+   */
   public Post getPostByKeyWord(String keyword)
   {
     for (Post post : this.getAllPosts()) {
@@ -133,6 +130,14 @@ public class Diary {
   }
 
 
+  /**
+   * Gets the posts between to dates.
+   *
+   *
+   * @param start Start date.
+   * @param end End date.
+   * @return Collection of the dates between end and start. Returns empty Collection if none.
+   */
   public Collection<Post> getPostBetweenDates(Time start, Time end) {
     List<Post> allPosts = new ArrayList<>();
 

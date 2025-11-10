@@ -1,12 +1,10 @@
 package edu.ntnu.iir.bidata.ui;
 
-import edu.ntnu.iir.bidata.diary.AuthorRegister;
-import edu.ntnu.iir.bidata.diary.Diary;
-import edu.ntnu.iir.bidata.diary.Time;
-import edu.ntnu.iir.bidata.diary.Post;
+import edu.ntnu.iir.bidata.diary.*;
 
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -71,6 +69,7 @@ public class DiaryInterface {
           case "forgot" -> forgot();
           case "date" -> date();
           case "author" -> postByAuthor();
+          case "stats" -> stats();
           case "help" -> commands();
           case "quit" -> started = false;
           default -> System.out.println("Invalid option.");
@@ -200,19 +199,18 @@ public class DiaryInterface {
       System.out.println("Type end date: ");
       String endDate = Input.getInput();
       String time = new Time().getClock();
-      authorRegister.getAllDiary().
-              forEach(diary -> {
-        diary.getPostBetweenDates(new Time(time, startDate), new Time(time, endDate)).
-                forEach(post -> {
-
-                  if (post == null) {
-                    // Do nothing if post is null.
-                  } else {
-                    System.out.println();
-                    post.printPost();
-                  }
-        });
-      });
+      Time start = new Time(time, startDate);
+      Time end = new Time(time, endDate);
+      authorRegister.getAllDiary().forEach(diary ->
+                diary.getPostBetweenDates(start, end).forEach(post -> {
+                          if (post == null) {
+                            // Do nothing if post is null.
+                          } else {
+                            System.out.println();
+                            post.printPost();
+                          }
+                        })
+              );
     }
   }
 
@@ -220,8 +218,8 @@ public class DiaryInterface {
    * Function to handle adding of posts to the diary's.
    */
   private static void add() {
-    if (!authorRegister.getAuthors().isEmpty()){
-      authorRegister.getAuthors().forEach(author -> {
+    if (!authorRegister.getAuthorsName().isEmpty()){
+      authorRegister.getAuthorsName().forEach(author -> {
         System.out.println("Previous authors: ");
         System.out.println(author);
       });
@@ -240,8 +238,8 @@ public class DiaryInterface {
    * Adds a post on a specified day, month & year.
    */
   private static void forgot() {
-    if (!authorRegister.getAuthors().isEmpty()){
-      authorRegister.getAuthors().forEach(author -> {
+    if (!authorRegister.getAuthorsName().isEmpty()){
+      authorRegister.getAuthorsName().forEach(author -> {
         System.out.println("Previous authors: ");
         System.out.println(author);
       });
@@ -264,7 +262,7 @@ public class DiaryInterface {
   private static void postByAuthor() {
     System.out.println(AUTHOR);
     String author = Input.getInput();
-    if(authorRegister.getAuthors().contains(author))
+    if(authorRegister.getAuthorsName().contains(author))
     {
       System.out.println();
       authorRegister.getDiary(author).getAllPosts().forEach(post -> {
@@ -275,6 +273,20 @@ public class DiaryInterface {
     }
     else  {
       System.out.println(NO_POST_FOUND);
+    }
+  }
+
+  /**
+   *
+   */
+  private static void stats() {
+    Map<String, Integer> statistics = authorRegister.getStatistics();
+
+    String[] names = statistics.keySet().toArray(new String[0]);
+    Arrays.sort(names);
+    for (String name : names) {
+      int expected = statistics.get(name);
+      System.out.println(name + " : " + expected + " post's");
     }
   }
 }
