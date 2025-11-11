@@ -88,8 +88,9 @@ public class Post {
   public void setAuthor(String auth) {
     try {
       this.author = new Author(auth);
-      if (this.author.getName().isEmpty()) throw new IllegalArgumentException("Author name is empty");
-      else {
+      if (this.author.getName().isEmpty()) {
+        throw new IllegalArgumentException("Author name is empty");
+      } else {
         this.author =  new Author(auth);
       }
     } catch (Exception e) {
@@ -131,7 +132,7 @@ public class Post {
    *
    * @param date new date.
    */
-  public void setDate(String date){
+  public void setDate(String date) {
     this.dateTime.setDate(date);
   }
 }

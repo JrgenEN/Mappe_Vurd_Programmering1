@@ -1,12 +1,12 @@
 package edu.ntnu.iir.bidata.diary;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 /**
  * Class to handle date and time.
@@ -79,9 +79,11 @@ public class Time {
     return this.clock;
   }
 
-  public List<String> getDateSet(){
+
+  public List<String> getDateSet() {
     return new ArrayList<>(Arrays.asList(this.getDate().split("\\.")));
   }
+
   /**
    * Setter for date.
    *
@@ -91,6 +93,7 @@ public class Time {
   public void setDate(String date) {
     this.date = date;
   }
+
   /**
    * Sets the date and time to current date and time.
    */

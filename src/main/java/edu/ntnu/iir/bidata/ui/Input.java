@@ -1,9 +1,9 @@
 package edu.ntnu.iir.bidata.ui;
 
 import java.util.Arrays;
-import java.util.Set;
-import java.util.Scanner;
 import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Static class to handle user input.

@@ -38,10 +38,10 @@ public class Author {
   private String formatName(String name) {
     String[] names = name.split(" ");
     String returnString = "";
-    for ( String s : names ) {
+    for (String s : names) {
       char[] c = s.toCharArray();
       c[0] = Character.toUpperCase(c[0]);
-      for (int i = 1; i < c.length; i++){
+      for (int i = 1; i < c.length; i++) {
         c[i] = Character.toLowerCase(c[i]);
       }
       if (!returnString.isEmpty()) {

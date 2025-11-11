@@ -1,5 +1,10 @@
 package edu.ntnu.iir.bidata.diary;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class to make an author register of all authors, and creates a diary for each new author.
@@ -7,12 +12,14 @@ import java.util.*;
  * @author Jørgen
  * @see Author
  * @see Diary
+ * @see Map
+ * @see Set
+ * @see HashSet
  * @see HashMap
  * @see Collection
  * @version 2.0
  */
-public class AuthorRegister
-{
+public class AuthorRegister {
   private final HashMap<Author, Diary>  authorsDiary;
 
   /**
@@ -43,14 +50,15 @@ public class AuthorRegister
    *
    * @param post Add the {@code Post} to the {@code Diary}.
    */
-  public void addDiaryPost(Post post){
+  public void addDiaryPost(Post post) {
     if (this.authorsDiary.containsKey(this.getAuthorByName(post.getAuthor().getName()))) {
       this.authorsDiary.get(this.getAuthorByName(post.getAuthor().getName())).addPost(post);
-    }
-    else {
+    } else {
       Diary diary = new Diary();
+
       diary.addPost(post);
-      this.authorsDiary.put(post.getAuthor(),diary);
+
+      this.authorsDiary.put(post.getAuthor(), diary);
     }
   }
 
@@ -76,7 +84,7 @@ public class AuthorRegister
    *
    * @return Returns a {@code Collection<>()} of Diary's.
    */
-  public Collection<Diary> getAllDiary(){
+  public Collection<Diary> getAllDiary() {
     return this.authorsDiary.values();
   }
 
@@ -86,7 +94,7 @@ public class AuthorRegister
    *
    * @return Returns a {@code Set<>} of names to Authors.
    */
-  public Set<String> getAuthorsName(){
+  public Set<String> getAuthorsName() {
     Set<String> names = new HashSet<>();
     for (Author author : this.authorsDiary.keySet()) {
       names.add(author.getName());

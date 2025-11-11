@@ -2,7 +2,10 @@ package edu.ntnu.iir.bidata.diary;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Class to make a diary with an HashMap of Posts.
@@ -26,7 +29,7 @@ public class Diary {
    * Constructor For diary. Initializing posts to a new HashMap.
    */
   public Diary() {
-      this.posts = new HashMap<>();
+    this.posts = new HashMap<>();
   }
 
   /**
@@ -43,8 +46,7 @@ public class Diary {
       Post post = new Post(author, title, text);
       this.posts.put(date, post);
       System.out.println(POST_ADDED);
-    }
-    else {
+    } else {
       System.out.println(POST_ALREADY_EXIST);
     }
   }
@@ -55,13 +57,11 @@ public class Diary {
    *
    * @param post Post you want to add to the diary.
    */
-  public void addPost(Post post)
-  {
+  public void addPost(Post post) {
     if (!posts.containsKey(post.getDate())) {
       posts.put(post.getDate(), post);
       System.out.println(POST_ADDED);
-    }
-    else{
+    } else {
       System.out.println(POST_ALREADY_EXIST);
     }
   }
@@ -119,8 +119,7 @@ public class Diary {
    * @param keyword Keyword you want to search for.
    * @return Returns the post, and null if no posts.
    */
-  public Post getPostByKeyWord(String keyword)
-  {
+  public Post getPostByKeyWord(String keyword) {
     for (Post post : this.getAllPosts()) {
       if (post.getText().contains(keyword)) {
         return post;
@@ -163,7 +162,7 @@ public class Diary {
    *
    */
   public Collection<Post> getAllPosts() {
-      return this.posts.values();
+    return this.posts.values();
   }
 
   /**
