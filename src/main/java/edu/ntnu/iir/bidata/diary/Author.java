@@ -3,6 +3,9 @@ package edu.ntnu.iir.bidata.diary;
 /**
  * Class for authors.
  *
+ *
+ * @author jorgen
+ * @version 1.0
  * @see String
  */
 public class Author {

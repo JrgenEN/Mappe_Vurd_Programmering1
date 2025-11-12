@@ -13,7 +13,7 @@ import java.util.Set;
  * Diary interface.
  *
  * @author jorge
- * @version 1.0
+ * @version 2.0
  * @see Diary
  * @see HashSet
  * @see Input
@@ -55,6 +55,7 @@ public class DiaryInterface {
     System.out.println("To find a post with a keyword write: keyword");
     System.out.println("To remove posts write: Remove");
     System.out.println("To add posts for forgotten days write: Forgot");
+    System.out.println("To get statistics of authors write: Stats");
     System.out.println("For help, type: Help");
     System.out.println("To quit write: Quit");
   }
@@ -177,16 +178,16 @@ public class DiaryInterface {
   private static void date() {
     System.out.println("To check all write: None");
     System.out.println(AUTHOR);
-    String author = Input.getInput();
+    final String author = Input.getInput();
+    System.out.println("Use format dd.mm.yyyy");
+    System.out.println("Type start date: ");
+    String startDate = Input.getInput();
+    System.out.println("Type end date: ");
+    String endDate = Input.getInput();
+    String time = new Time().getClock();
+    Time start = new Time(time, startDate);
+    Time end = new Time(time, endDate);
     if (!author.equals("none")) {
-      System.out.println("Use format dd.mm.yyyy");
-      System.out.println("Type start date: ");
-      String startDate = Input.getInput();
-      System.out.println("Type end date: ");
-      String endDate = Input.getInput();
-      String time = new Time().getClock();
-      Time start = new Time(time, startDate);
-      Time end = new Time(time, endDate);
       authorRegister.getDiary(author).getPostBetweenDates(start, end)
               .forEach(post -> {
                 System.out.println();
@@ -199,14 +200,6 @@ public class DiaryInterface {
               }
       );
     } else {
-      System.out.println("Use format dd.mm.yyyy");
-      System.out.println("Type start date: ");
-      String startDate = Input.getInput();
-      System.out.println("Type end date: ");
-      String endDate = Input.getInput();
-      String time = new Time().getClock();
-      Time start = new Time(time, startDate);
-      Time end = new Time(time, endDate);
       authorRegister.getAllDiary().forEach(diary ->
                 diary.getPostBetweenDates(start, end).forEach(post -> {
                   if (post == null) {

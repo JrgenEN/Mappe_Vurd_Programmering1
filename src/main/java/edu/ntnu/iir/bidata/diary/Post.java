@@ -6,9 +6,10 @@ package edu.ntnu.iir.bidata.diary;
  *
  * @author jorge
  *
- * @version 1.0
+ * @version 2.0
  * @see Time
  * @see Author
+ * @since 1.0
  */
 public class Post {
   private Author author;

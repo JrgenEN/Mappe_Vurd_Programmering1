@@ -13,10 +13,11 @@ import java.util.List;
  *
  *
  * @author jorge
- * @version 1.0
+ * @version 2.0
  * @see LocalDateTime
  * @see LocalDate
  * @see DateTimeFormatter
+ * @since 1.0
  */
 public class Time {
   private String clock;
