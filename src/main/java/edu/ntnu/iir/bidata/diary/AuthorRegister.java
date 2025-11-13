@@ -50,15 +50,15 @@ public class AuthorRegister {
    *
    * @param post Add the {@code Post} to the {@code Diary}.
    */
-  public void addDiaryPost(Post post) {
-    if (this.authorsDiary.containsKey(this.getAuthorByName(post.getAuthor().getName()))) {
-      this.authorsDiary.get(this.getAuthorByName(post.getAuthor().getName())).addPost(post);
+  public boolean addDiaryPost(Post post) {
+    Author author = this.getAuthorByName(post.getAuthor().getName());
+    if (this.authorsDiary.containsKey(author)) {
+      return this.authorsDiary.get(author).addPost(post);
     } else {
       Diary diary = new Diary();
-
-      diary.addPost(post);
-
+      boolean ret = diary.addPost(post);
       this.authorsDiary.put(post.getAuthor(), diary);
+      return ret;
     }
   }
 

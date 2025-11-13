@@ -4,11 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Class to make a diary with an HashMap of Posts.
+ * Class to make a diary with a HashMap of Posts.
  *
  *
  * @author jorge
@@ -21,7 +22,6 @@ import java.util.List;
  * @since 1.0
  */
 public class Diary {
-  private static final String POST_ADDED = "Post added successfully";
   private static final String POST_ALREADY_EXIST = "Error!\nAlready a post on this date!\n";
   private final HashMap<String, Post> posts;
 
@@ -35,67 +35,72 @@ public class Diary {
   /**
    * Add a post to the diary.
    *
-   *
    * @param author Author of the post
-   * @param title Title of the post
-   * @param text Text of the post
+   * @param title  Title of the post
+   * @param text   Text of the post
    */
   public void addPost(String author, String title, String text) {
-    String date = new Time().getDate();
-    if (!posts.containsKey(date)) {
-      Post post = new Post(author, title, text);
-      this.posts.put(date, post);
-      System.out.println(POST_ADDED);
-    } else {
-      System.out.println(POST_ALREADY_EXIST);
+    try {
+      String date = new Time().getDate();
+      if (!posts.containsKey(date)) {
+        Post post = new Post(author, title, text);
+        this.posts.put(date, post);
+      } else {
+        throw new IllegalArgumentException(POST_ALREADY_EXIST);
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
   }
 
   /**
    * Adds a post to the diary.
    *
-   *
    * @param post Post you want to add to the diary.
    */
-  public void addPost(Post post) {
-    if (!posts.containsKey(post.getDate())) {
-      posts.put(post.getDate(), post);
-      System.out.println(POST_ADDED);
-    } else {
-      System.out.println(POST_ALREADY_EXIST);
+  public boolean addPost(Post post) {
+    try {
+      if (!posts.containsKey(post.getDate())) {
+        posts.put(post.getDate(), post);
+      } else {
+        throw new IllegalArgumentException(POST_ALREADY_EXIST);
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return false;
     }
+    return true;
   }
 
   /**
    * Add a post to the diary.
    *
-   *
    * @param author Author of the post
-   * @param title Title of the post
-   * @param text Text of the post
-   * @param time Time of the post
-   * @param date Date of the post
+   * @param title  Title of the post
+   * @param text   Text of the post
+   * @param time   Time of the post
+   * @param date   Date of the post
    */
-  public void addPost(String author, String title, String text, String time, String date) {
-    Time test = new Time(time, date);
-
-    if (posts.containsKey(date) || test.getDate() == null || test.getClock() == null) {
-      System.out.println("Error!");
-
+  public boolean addPost(String author, String title, String text, String time, String date) {
+    try {
+      Time test = new Time(time, date);
       if (posts.containsKey(date)) {
-        System.out.println("Already a post on this date!");
+        throw new IllegalArgumentException("Already a post on this date!");
       }
-      if (test.getDate() == null) {
-        System.out.println("Invalid date!");
+      else if (test.getDate() == null) {
+        throw new IllegalArgumentException("Invalid date!");
+      } else if (test.getClock() == null) {
+        throw new IllegalArgumentException("Invalid time!");
+      } else {
+        Post post = new Post(author, title, text, time, date);
+        this.posts.put(date, post);
       }
-      if (test.getClock() == null) {
-        System.out.println("Invalid time!");
-      }
-    } else {
-      Post post = new Post(author, title, text, time, date);
-      this.posts.put(date, post);
-      System.out.println(POST_ADDED);
+    } catch(Exception e) {
+      System.out.println(e.getMessage());
+      return false;
     }
+
+    return true;
   }
 
   /**
@@ -113,7 +118,7 @@ public class Diary {
   }
 
   /**
-   * Search for posts with keyword.
+   * Search for posts with a keyword.
    *
    *
    * @param keyword Keyword you want to search for.
@@ -135,7 +140,7 @@ public class Diary {
    *
    * @param start Start date.
    * @param end End date.
-   * @return Collection of the dates between end and start. Returns empty Collection if none.
+   * @return {@code Collection} of the dates between end and start. If none returns an empty {@code Collection}.
    */
   public Collection<Post> getPostBetweenDates(Time start, Time end) {
     List<Post> allPosts = new ArrayList<>();
@@ -162,7 +167,13 @@ public class Diary {
    *
    */
   public Collection<Post> getAllPosts() {
-    return this.posts.values();
+    final ArrayList<String> keys = new ArrayList<>(this.posts.keySet());
+    Collections.sort(keys);
+    final Collection<Post> allPosts = new ArrayList<>();
+    for (String key : keys) {
+      allPosts.add(this.posts.get(key));
+    }
+    return allPosts;
   }
 
   /**
@@ -171,12 +182,17 @@ public class Diary {
    *
    * @param date Date of the post
    */
-  public void removePost(String date) {
-    if (this.posts.get(date) != null) {
-      this.posts.remove(date);
-      System.out.println("Post removed");
-    } else {
-      System.out.println("No posts on this date!");
+  public boolean removePost(String date) {
+    try {
+      if (this.posts.get(date) != null) {
+        this.posts.remove(date);
+      } else {
+        throw new IllegalArgumentException("No post's on " + date);
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return false;
     }
+    return true;
   }
 }

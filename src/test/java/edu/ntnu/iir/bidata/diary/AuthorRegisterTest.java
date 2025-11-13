@@ -57,7 +57,7 @@ public class AuthorRegisterTest {
 
     authorRegister.addDiaryPost(post);
 
-    assertEquals("SOmething wrong with adding second author",
+    assertEquals("Something wrong with adding second author",
             EXPECTED_DIARY_POSTS, authorRegister.getDiary(NAME).getAllPosts().size());
   }
 

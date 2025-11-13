@@ -52,11 +52,13 @@ public class Post {
   /**
    * Prints the post in format.
    */
-  public void printPost() {
-    System.out.println(this.getTitle());
-    System.out.println(this.getText());
-    System.out.println("Author: " + this.getAuthor().getName());
-    System.out.println(this.getClock() + " " + this.getDate());
+  public String toString() {
+    return this.getTitle() + "\n"
+            + this.getText()
+            + "\nAuthor: " + this.getAuthor().getName()
+            + "\n" + this.getClock() + " "
+            + this.getDate();
+
   }
   // Getters for posts.
 
@@ -88,8 +90,7 @@ public class Post {
    */
   public void setAuthor(String auth) {
     try {
-      this.author = new Author(auth);
-      if (this.author.getName().isEmpty()) {
+      if (auth.isEmpty()) {
         throw new IllegalArgumentException("Author name is empty");
       } else {
         this.author =  new Author(auth);
@@ -106,10 +107,14 @@ public class Post {
    * @param title Title.
    */
   public void setTitle(String title) {
-    if (title.isEmpty()) {
+    try {
+      if (title.isEmpty()) {
+        throw new IllegalArgumentException("Title is empty");
+      } else {
+        this.title = title;
+      }
+    } catch (Exception e) {
       this.title = "Title";
-    } else {
-      this.title = title;
     }
   }
 
@@ -120,10 +125,14 @@ public class Post {
    * @param text Text.
    */
   public void setText(String text) {
-    if (text.isEmpty()) {
+    try {
+      if (text.isEmpty()) {
+        throw new IllegalArgumentException("Text is empty");
+      } else {
+        this.text = text;
+      }
+    } catch (Exception e) {
       this.text = "Text";
-    } else {
-      this.text = text;
     }
   }
 

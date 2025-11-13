@@ -38,7 +38,7 @@ public class Author {
    * @param name Name of the author.
    * @return Formated string with uppercase letters.
    */
-  private String formatName(String name) {
+  public static String formatName(String name) {
     String[] names = name.split(" ");
     String returnString = "";
     for (String s : names) {

@@ -1,13 +1,12 @@
 package edu.ntnu.iir.bidata.ui;
 
+import edu.ntnu.iir.bidata.diary.Author;
 import edu.ntnu.iir.bidata.diary.AuthorRegister;
 import edu.ntnu.iir.bidata.diary.Diary;
 import edu.ntnu.iir.bidata.diary.Post;
 import edu.ntnu.iir.bidata.diary.Time;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * Diary interface.
@@ -27,6 +26,13 @@ public class DiaryInterface {
   private static final String TEXT = "Text: ";
   private static final String TITLE = "Title: ";
   private static final String NO_POST_FOUND = "No post found";
+  private static final String NONE = "None";
+  private static final String USE_FORMAT = "Use format dd.mm.yyyy";
+  private static final String NO_AUTHOR_FOUND = "No author found!";
+  private static final String WRITE_DATE_OF_WRITTEN_POST = "Write date of written post";
+  private static final String PREVIOUS_AUTHORS = "Previous authors: ";
+  private static final String KEYWORD_TO_FIND = "Type a keyword to find in posts: ";
+  private static final String TO_CHECK_ALL_WRITE = "To check all write: ";
 
   /**
    * Initialize the Interface.
@@ -47,21 +53,22 @@ public class DiaryInterface {
    * Commands for the interface.
    */
   public static void commands() {
-    System.out.println("To add a paragraph write: Add");
-    System.out.println("To print all posts write: All");
-    System.out.println("To print a specific post write: Print");
-    System.out.println("To print a date range of posts write: Date");
-    System.out.println("To print all post by author write: Author");
-    System.out.println("To find a post with a keyword write: keyword");
-    System.out.println("To remove posts write: Remove");
-    System.out.println("To add posts for forgotten days write: Forgot");
-    System.out.println("To get statistics of authors write: Stats");
+    System.out.println("Commands:");
+    System.out.println("Add \t\t To add a paragraph.");
+    System.out.println("All \t\t To print all posts.");
+    System.out.println("Forgot \t\t To add posts for forgotten days.");
+    System.out.println("Print \t\t To print a specific post.");
+    System.out.println("Date \t\t To print a date range of posts.");
+    System.out.println("Author \t\t To print all post by author.");
+    System.out.println("Keyword \t To find a post with a keyword.");
+    System.out.println("Remove \t\t To remove posts.");
+    System.out.println("Stats \t\t To get statistics of authors write.");
     System.out.println("For help, type: Help");
     System.out.println("To quit write: Quit");
   }
 
   /**
-   * Start function. Starts the program interface.
+   * Start a function. Starts the program interface.
    */
   public static void start() {
     boolean started = true;
@@ -69,20 +76,43 @@ public class DiaryInterface {
     while (started) {
       Set<String> words = Input.getInputSet();
 
-      for (String w : words) {
-        switch (w) {
-          case "add" -> add();
-          case "print" -> print();
-          case "all" -> all();
-          case "keyword" -> keyword();
-          case "remove" -> remove();
-          case "forgot" -> forgot();
-          case "date" -> date();
-          case "author" -> postByAuthor();
-          case "stats" -> stats();
-          case "help" -> commands();
-          case "quit" -> started = false;
-          default -> System.out.println("Invalid option.");
+      for (String word : words) {
+        switch (word) {
+          case "add":
+            add();
+            break;
+          case "print":
+            print();
+            break;
+          case "all":
+            all();
+            break;
+          case "keyword":
+            keyword();
+            break;
+          case "remove":
+            remove();
+            break;
+          case "forgot":
+            forgot();
+            break;
+          case "date":
+            date();
+            break;
+          case "author":
+            postByAuthor();
+            break;
+          case "stats":
+            stats();
+            break;
+          case "help":
+            commands();
+            break;
+          case "quit":
+            started = false;
+            break;
+          default:
+            System.out.println("Invalid option.");
         }
       }
     }
@@ -93,20 +123,22 @@ public class DiaryInterface {
    */
   private static void print() {
     System.out.println(AUTHOR);
-    String author = Input.getInput();
+    previousAuthors();
+    final String author = Author.formatName(Input.getInput());
 
     if (authorRegister.getDiary(author) != null) {
-      System.out.println("Write date of written post\nUse format dd.mm.yyyy");
+      System.out.println(WRITE_DATE_OF_WRITTEN_POST + "\n" + USE_FORMAT);
       String date = Input.getInput();
-
+      System.out.println();
       if (authorRegister.getDiary(author).getPost(date) != null) {
-        authorRegister.getDiary(author).getPost(date).printPost();
+        printPost(authorRegister.getDiary(author).getPost(date));
       } else {
         System.out.println(NO_POST_FOUND);
       }
     } else {
-      System.out.println("No author found!");
+      System.out.println(NO_AUTHOR_FOUND);
     }
+    System.out.println();
   }
 
 
@@ -115,19 +147,17 @@ public class DiaryInterface {
    */
   private static void remove() {
     System.out.println(AUTHOR);
-    String author = Input.getInput();
+    final String author = Author.formatName(Input.getInput());
 
     if (authorRegister.getDiary(author) != null) {
-      System.out.println("Write date of written post\nUse format dd.mm.yyyy");
+      System.out.println(WRITE_DATE_OF_WRITTEN_POST + "\n" + USE_FORMAT);
       String date = Input.getInput();
 
-      if (authorRegister.getDiary(author).getPost(date) != null) {
-        authorRegister.getDiary(author).removePost(date);
-      } else {
-        System.out.println(DiaryInterface.NO_POST_FOUND);
+      if (!authorRegister.getDiary(author).removePost(date)) {
+        System.out.println(NO_POST_FOUND);
       }
     } else {
-      System.out.println("No author found!");
+      System.out.println(NO_AUTHOR_FOUND);
     }
   }
 
@@ -138,7 +168,7 @@ public class DiaryInterface {
     authorRegister.getAllDiary().forEach(diary -> {
       System.out.println();
       diary.getAllPosts().forEach(post -> {
-        post.printPost();
+        printPost(post);
         System.out.println();
       });
     });
@@ -148,24 +178,25 @@ public class DiaryInterface {
    * Searches for keywords in all posts and prints them.
    */
   private static void keyword() {
-    System.out.println("To check all write: None");
+    System.out.println(TO_CHECK_ALL_WRITE+ NONE);
     System.out.println(AUTHOR);
-    String author = Input.getInput();
-    if (!author.equals("none")) {
+    final String author = Author.formatName(Input.getInput());
+    if (!author.equals(NONE)) {
       if (authorRegister.getDiary(author) != null) {
-        System.out.println("Type a keyword to find in posts: ");
+        System.out.println(KEYWORD_TO_FIND);
         String keyword = Input.getInput();
 
-        authorRegister.getDiary(author).getPostByKeyWord(keyword).printPost();
+        printPost(authorRegister.getDiary(author).getPostByKeyWord(keyword));
       }
     } else {
-      System.out.println("Type a keyword to find in posts: ");
+      System.out.println(KEYWORD_TO_FIND);
       String keyword = Input.getInput();
 
       authorRegister.getAllDiary().forEach(diary -> {
-        if (diary.getPostByKeyWord(keyword) != null) {
+        Post foundPosts = diary.getPostByKeyWord(keyword);
+        if (foundPosts != null) {
           System.out.println();
-          diary.getPostByKeyWord(keyword).printPost();
+          printPost(foundPosts);
         }
       });
     }
@@ -176,10 +207,10 @@ public class DiaryInterface {
    * Gets the post in a date interval.
    */
   private static void date() {
-    System.out.println("To check all write: None");
+    System.out.println(TO_CHECK_ALL_WRITE + NONE);
     System.out.println(AUTHOR);
-    final String author = Input.getInput();
-    System.out.println("Use format dd.mm.yyyy");
+    final String author = Author.formatName(Input.getInput());
+    System.out.println(USE_FORMAT);
     System.out.println("Type start date: ");
     String startDate = Input.getInput();
     System.out.println("Type end date: ");
@@ -187,26 +218,22 @@ public class DiaryInterface {
     String time = new Time().getClock();
     Time start = new Time(time, startDate);
     Time end = new Time(time, endDate);
-    if (!author.equals("none")) {
+    if (!author.equals(NONE)) {
       authorRegister.getDiary(author).getPostBetweenDates(start, end)
               .forEach(post -> {
                 System.out.println();
-                if (post == null) {
-                  // Do nothing if post is null.
-                } else {
+                if (post != null) {
                   System.out.println();
-                  post.printPost();
+                  printPost(post);
                 }
               }
       );
     } else {
       authorRegister.getAllDiary().forEach(diary ->
                 diary.getPostBetweenDates(start, end).forEach(post -> {
-                  if (post == null) {
-                    // Do nothing if post is null.
-                  } else {
+                  if (post != null) {
                     System.out.println();
-                    post.printPost();
+                    printPost(post);
                   }
                 })
       );
@@ -217,54 +244,49 @@ public class DiaryInterface {
    * Function to handle adding of posts to the diary's.
    */
   private static void add() {
-    if (!authorRegister.getAuthorsName().isEmpty()) {
-      authorRegister.getAuthorsName().forEach(author -> {
-        System.out.println("Previous authors: ");
-        System.out.println(author);
-      });
-    }
-    System.out.println(AUTHOR);
-    String author = Input.getInput();
-    System.out.println(TITLE);
-    String title = Input.getInput();
-    System.out.println(TEXT);
-    String text = Input.getInput();
-    authorRegister.addDiaryPost(new Post(author, title, text));
-  }
-
-  /**
-   * Function to handle forgotten dates.
-   * Adds a post on a specified day, month & year.
-   */
-  private static void forgot() {
-    if (!authorRegister.getAuthorsName().isEmpty()) {
-      authorRegister.getAuthorsName().forEach(author -> {
-        System.out.println("Previous authors: ");
-        System.out.println(author);
-      });
-    }
+    previousAuthors();
     System.out.println(AUTHOR);
     final String author = Input.getInput();
     System.out.println(TITLE);
     final String title = Input.getInput();
     System.out.println(TEXT);
     final String text = Input.getInput();
-    System.out.println("Forgotten Date\nUse format dd.mm.yyyy");
+    if (authorRegister.addDiaryPost(new Post(author, title, text))) {
+      System.out.println("Post added successfully!");
+    }
+  }
+
+  /**
+   * Function to handle forgotten dates.
+   * Adds a post on a specified day, month and year.
+   */
+  private static void forgot() {
+    previousAuthors();
+    System.out.println(AUTHOR);
+    final String author = Author.formatName(Input.getInput());
+    System.out.println(TITLE);
+    final String title = Input.getInput();
+    System.out.println(TEXT);
+    final String text = Input.getInput();
+    System.out.println("Forgotten Date\n" + USE_FORMAT);
     String date = Input.getInput();
     String time = new Time().getClock();
-    authorRegister.addDiaryPost(new Post(author, title, text, time, date));
+    if (authorRegister.addDiaryPost(new Post(author, title, text, time, date))){
+      System.out.println("Post added successfully!");
+    }
   }
 
   /**
    * Gets the posts by a specific author.
    */
   private static void postByAuthor() {
+    previousAuthors();
     System.out.println(AUTHOR);
-    String author = Input.getInput();
+    final String author = Author.formatName(Input.getInput());
     if (authorRegister.getAuthorsName().contains(author)) {
       System.out.println();
       authorRegister.getDiary(author).getAllPosts().forEach(post -> {
-        post.printPost();
+        printPost(post);
         System.out.println();
       });
 
@@ -285,6 +307,23 @@ public class DiaryInterface {
       int expected = statistics.get(name);
       System.out.println(name + " : " + expected + " post's");
     }
+  }
+
+  /**
+   * Gets all the previous authors.
+   */
+  private static void previousAuthors() {
+    if (!authorRegister.getAuthorsName().isEmpty()) {
+      System.out.println(PREVIOUS_AUTHORS);
+      authorRegister.getAuthorsName().forEach(System.out::println);
+    }
+  }
+
+  /**
+   *
+   */
+  private static void printPost(Post post) {
+    System.out.println(post.toString());
   }
 }
 

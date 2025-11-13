@@ -26,10 +26,6 @@ public class DiaryTest {
   public void TestGettingAllPosts() {
     Collection<Post> posts = test.getAllPosts();
     assertNotNull(posts);
-    for (Post temp : posts) {
-      temp.printPost();
-      System.out.println();
-    }
   }
 
   @Test
@@ -50,26 +46,23 @@ public class DiaryTest {
   @Test
   public void TestRemovingPost() {
     String date = "10.10.2025";
-    test.removePost(date);
-    assertNull("Failed removing", test.getPost(date));
+    assertTrue("Failed removing", test.removePost(date));
+
   }
 
   @Test
   public void TestAddingAExistingElement() {
-    test.addPost("Invalid","invalid","invalid","10:55", "13.10.2025");
-    assertNotEquals("Invalid", test.getPost("13.10.2025").getAuthor().getName());
+    assertFalse("Added post when it shouldn't",test.addPost("Invalid","invalid","invalid","10:55", "13.10.2025"));
   }
 
   @Test
   public void  TestAddingInvalidDate() {
-    test.addPost("Invalid","invalid","invalid","10:55", "Invalid");
-    assertNull("Not null", test.getPost("Invalid"));
+    assertFalse("Added post when it shouldn't", test.addPost("Invalid","invalid","invalid","10:55", "Invalid"));
   }
 
   @Test
   public void TestAddingInvalidTime() {
-    test.addPost("Invalid","invalid","invalid","Invalid", "01.10.2025");
-    assertNull(test.getPost("01.10.2025"));
+    assertFalse("Added post when it shouldn't", test.addPost("Invalid","invalid","invalid","Invalid", "01.10.2025"));
   }
 
   @Test
