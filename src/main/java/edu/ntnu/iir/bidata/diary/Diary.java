@@ -86,8 +86,7 @@ public class Diary {
       Time test = new Time(time, date);
       if (posts.containsKey(date)) {
         throw new IllegalArgumentException("Already a post on this date!");
-      }
-      else if (test.getDate() == null) {
+      } else if (test.getDate() == null) {
         throw new IllegalArgumentException("Invalid date!");
       } else if (test.getClock() == null) {
         throw new IllegalArgumentException("Invalid time!");
@@ -95,7 +94,7 @@ public class Diary {
         Post post = new Post(author, title, text, time, date);
         this.posts.put(date, post);
       }
-    } catch(Exception e) {
+    } catch (Exception e) {
       System.out.println(e.getMessage());
       return false;
     }
@@ -140,7 +139,7 @@ public class Diary {
    *
    * @param start Start date.
    * @param end End date.
-   * @return {@code Collection} of the dates between end and start. If none returns an empty {@code Collection}.
+   * @return Collection of the dates between end and start. If none returns an empty Collection.
    */
   public Collection<Post> getPostBetweenDates(Time start, Time end) {
     List<Post> allPosts = new ArrayList<>();

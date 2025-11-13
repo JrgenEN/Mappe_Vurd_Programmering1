@@ -5,8 +5,10 @@ import edu.ntnu.iir.bidata.diary.AuthorRegister;
 import edu.ntnu.iir.bidata.diary.Diary;
 import edu.ntnu.iir.bidata.diary.Post;
 import edu.ntnu.iir.bidata.diary.Time;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.*;
 
 /**
  * Diary interface.
@@ -14,7 +16,9 @@ import java.util.*;
  * @author jorge
  * @version 2.0
  * @see Diary
- * @see HashSet
+ * @see Set
+ * @see Arrays
+ * @see Map
  * @see Input
  * @see AuthorRegister
  *
@@ -178,7 +182,7 @@ public class DiaryInterface {
    * Searches for keywords in all posts and prints them.
    */
   private static void keyword() {
-    System.out.println(TO_CHECK_ALL_WRITE+ NONE);
+    System.out.println(TO_CHECK_ALL_WRITE + NONE);
     System.out.println(AUTHOR);
     final String author = Author.formatName(Input.getInput());
     if (!author.equals(NONE)) {
@@ -271,7 +275,7 @@ public class DiaryInterface {
     System.out.println("Forgotten Date\n" + USE_FORMAT);
     String date = Input.getInput();
     String time = new Time().getClock();
-    if (authorRegister.addDiaryPost(new Post(author, title, text, time, date))){
+    if (authorRegister.addDiaryPost(new Post(author, title, text, time, date))) {
       System.out.println("Post added successfully!");
     }
   }
@@ -320,7 +324,7 @@ public class DiaryInterface {
   }
 
   /**
-   *
+   * Print a post.
    */
   private static void printPost(Post post) {
     System.out.println(post.toString());

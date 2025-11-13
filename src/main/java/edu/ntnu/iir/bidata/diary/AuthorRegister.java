@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Class to make an author register of all authors, and creates a diary for each new author.
+ * Class to make an author register of all authors and creates a diary for each new author.
  *
  * @author Jørgen
  * @see Author
@@ -104,7 +104,7 @@ public class AuthorRegister {
 
   /**
    * Gets the {@code Author} by {@code String} name.
-   * Private so it's not available.
+   * Private, so it's not available to the public.
    *
    *
    * @param name Name for {@code Author} as {@code String}.
