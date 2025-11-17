@@ -1,5 +1,17 @@
 package edu.ntnu.iir.bidata.ui;
 
+import static edu.ntnu.iir.bidata.diary.Constants.AUTHOR;
+import static edu.ntnu.iir.bidata.diary.Constants.KEYWORD_TO_FIND;
+import static edu.ntnu.iir.bidata.diary.Constants.NONE;
+import static edu.ntnu.iir.bidata.diary.Constants.NO_AUTHOR_FOUND;
+import static edu.ntnu.iir.bidata.diary.Constants.NO_POST_FOUND;
+import static edu.ntnu.iir.bidata.diary.Constants.PREVIOUS_AUTHORS;
+import static edu.ntnu.iir.bidata.diary.Constants.TEXT;
+import static edu.ntnu.iir.bidata.diary.Constants.TITLE;
+import static edu.ntnu.iir.bidata.diary.Constants.TO_CHECK_ALL_WRITE;
+import static edu.ntnu.iir.bidata.diary.Constants.USE_FORMAT;
+import static edu.ntnu.iir.bidata.diary.Constants.WRITE_DATE_OF_WRITTEN_POST;
+
 import edu.ntnu.iir.bidata.diary.Author;
 import edu.ntnu.iir.bidata.diary.AuthorRegister;
 import edu.ntnu.iir.bidata.diary.Diary;
@@ -26,17 +38,6 @@ import java.util.Set;
  */
 public class DiaryInterface {
   private static AuthorRegister authorRegister;
-  private static final String AUTHOR = "Author: ";
-  private static final String TEXT = "Text: ";
-  private static final String TITLE = "Title: ";
-  private static final String NO_POST_FOUND = "No post found";
-  private static final String NONE = "None";
-  private static final String USE_FORMAT = "Use format dd.mm.yyyy";
-  private static final String NO_AUTHOR_FOUND = "No author found!";
-  private static final String WRITE_DATE_OF_WRITTEN_POST = "Write date of written post";
-  private static final String PREVIOUS_AUTHORS = "Previous authors: ";
-  private static final String KEYWORD_TO_FIND = "Type a keyword to find in posts: ";
-  private static final String TO_CHECK_ALL_WRITE = "To check all write: ";
 
   /**
    * Initialize the Interface.

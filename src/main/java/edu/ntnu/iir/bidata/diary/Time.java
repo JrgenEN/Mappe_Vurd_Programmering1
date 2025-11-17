@@ -34,7 +34,7 @@ public class Time {
    *
    *
    * @param time the clock you want in format HH:mm.
-   * @param date the  date you want in format dd.MM.yyyy.
+   * @param date the date you want in format dd.MM.yyyy.
    */
   public Time(String time, String date) {
     this.setDateTime(time, date);

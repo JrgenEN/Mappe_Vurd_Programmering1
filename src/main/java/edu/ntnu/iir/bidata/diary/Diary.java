@@ -1,5 +1,7 @@
 package edu.ntnu.iir.bidata.diary;
 
+import static edu.ntnu.iir.bidata.diary.Constants.POST_ALREADY_EXIST;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.List;
  * @since 1.0
  */
 public class Diary {
-  private static final String POST_ALREADY_EXIST = "Error!\nAlready a post on this date!\n";
+
   private final HashMap<String, Post> posts;
 
   /**

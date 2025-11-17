@@ -34,7 +34,7 @@ public class Post {
   }
 
   /**
-   * Constructor for post Class with clock and date.
+   * Constructor for post-Class with clock and date.
    *
    * @param auth  Author of the post
    * @param title Title of the post
