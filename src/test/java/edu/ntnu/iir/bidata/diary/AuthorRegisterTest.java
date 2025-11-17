@@ -63,7 +63,12 @@ public class AuthorRegisterTest {
 
   @Test
   public void TestGettingDiaryByInvalidName() {
-    assertNull(authorRegister.getDiary(""));
+    try {
+      authorRegister.getDiary("");
+    } catch (Exception e) {
+      assertEquals("No diary for ", e.getMessage());
+    }
+
   }
 
   @Test

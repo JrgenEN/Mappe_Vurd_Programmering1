@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,21 +79,6 @@ public class Time {
     return this.clock;
   }
 
-
-  public List<String> getDateSet() {
-    return new ArrayList<>(Arrays.asList(this.getDate().split("\\.")));
-  }
-
-  /**
-   * Setter for date.
-   *
-   *
-   * @param date New date.
-   */
-  public void setDate(String date) {
-    this.date = date;
-  }
-
   /**
    * Sets the date and time to current date and time.
    */
@@ -115,17 +99,30 @@ public class Time {
    * @param d date
    */
   private void setDateTime(String t, String d) {
-    final int testD = Arrays.asList(d.split("\\.")).size();
-    final int testT = Arrays.asList(t.split(":")).size();
-
+    final List<String> testD = Arrays.asList(d.split("\\."));
+    final List<String> testT = Arrays.asList(t.split(":"));
+    final int[] intDate = new int[3];
+    
+    for (int i = 0; i < testD.size(); i++) {
+      try {
+        intDate[i] = Integer.parseInt(testD.get(i));
+      } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("Use numbers for date");
+      }
+    }
     this.clock = t;
     this.date = d;
 
-    if (testD != 3) {
-      this.date = null;
-    }
-    if (testT != 2) {
-      this.clock = null;
+    if (testD.size() != 3) {
+      throw new IllegalArgumentException("Invalid date format, use dd.MM.yyyy");
+    } else if (testT.size() != 2) {
+      throw new IllegalArgumentException("Invalid time format, use HH:mm");
+    } else if (intDate[0] > 31 || intDate[0] <= 0) {
+      throw new IllegalArgumentException("Invalid day, use 1-31");
+    } else if (intDate[1] > 12 || intDate[1] <= 0) {
+      throw new IllegalArgumentException("Invalid month, use 1-12");
+    } else if (intDate[2] > 2025 || intDate[2] <= 1900) {
+      throw new IllegalArgumentException("Invalid year, use 1900-2025");
     }
   }
 }

@@ -12,11 +12,8 @@ import java.util.Set;
  * @author Jørgen
  * @see Author
  * @see Diary
- * @see Map
- * @see Set
  * @see HashSet
  * @see HashMap
- * @see Collection
  * @version 1.0
  */
 public class AuthorRegister {
@@ -75,7 +72,7 @@ public class AuthorRegister {
         return author.getValue();
       }
     }
-    return null;
+    throw new IllegalArgumentException("No diary for " + name);
   }
 
   /**
@@ -117,6 +114,6 @@ public class AuthorRegister {
         return author.getKey();
       }
     }
-    return null;
+    throw new IllegalArgumentException("No author with that name");
   }
 }

@@ -40,16 +40,12 @@ public class Diary {
    * @param text   Text of the post
    */
   public void addPost(String author, String title, String text) {
-    try {
-      String date = new Time().getDate();
-      if (!posts.containsKey(date)) {
-        Post post = new Post(author, title, text);
-        this.posts.put(date, post);
-      } else {
-        throw new IllegalArgumentException(POST_ALREADY_EXIST);
-      }
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+    String date = new Time().getDate();
+    if (!posts.containsKey(date)) {
+      Post post = new Post(author, title, text);
+      this.posts.put(date, post);
+    } else {
+      throw new IllegalArgumentException(POST_ALREADY_EXIST);
     }
   }
 
@@ -83,13 +79,8 @@ public class Diary {
    */
   public boolean addPost(String author, String title, String text, String time, String date) {
     try {
-      Time test = new Time(time, date);
       if (posts.containsKey(date)) {
         throw new IllegalArgumentException("Already a post on this date!");
-      } else if (test.getDate() == null) {
-        throw new IllegalArgumentException("Invalid date!");
-      } else if (test.getClock() == null) {
-        throw new IllegalArgumentException("Invalid time!");
       } else {
         Post post = new Post(author, title, text, time, date);
         this.posts.put(date, post);
@@ -124,12 +115,16 @@ public class Diary {
    * @return Returns the post, and null if no posts.
    */
   public Post getPostByKeyWord(String keyword) {
+    Post tempPost = null;
     for (Post post : this.getAllPosts()) {
       if (post.getText().contains(keyword)) {
-        return post;
+        tempPost = post;
       }
     }
-    return null;
+    if (tempPost == null) {
+      throw new IllegalArgumentException("No posts with keyword " + keyword);
+    }
+    return tempPost;
   }
 
 
@@ -154,8 +149,11 @@ public class Diary {
         allPosts.add(post);
       }
     }
+    if (!allPosts.isEmpty()) {
+      return allPosts;
+    }
 
-    return allPosts;
+    throw new IllegalArgumentException("No posts between input dates");
   }
 
   /**
@@ -176,22 +174,31 @@ public class Diary {
   }
 
   /**
+   * Gets all the dates and sorts them.
+   *
+   * @return dates as a Collection.
+   */
+  public Collection<String> getAllDates() {
+    final ArrayList<String> dates = new ArrayList<>(this.posts.keySet());
+    if (dates.isEmpty()) {
+      throw new IllegalArgumentException("No posts in the diary");
+    }
+    Collections.sort(dates);
+    return dates;
+  }
+
+  /**
    * Removes a post from the diary.
    *
    *
    * @param date Date of the post
    */
   public boolean removePost(String date) {
-    try {
-      if (this.posts.get(date) != null) {
-        this.posts.remove(date);
-      } else {
-        throw new IllegalArgumentException("No post's on " + date);
-      }
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return false;
+    if (this.posts.containsKey(date)) {
+      this.posts.remove(date);
+      return true;
+    } else {
+      throw new IllegalArgumentException("No post's on " + date);
     }
-    return true;
   }
 }

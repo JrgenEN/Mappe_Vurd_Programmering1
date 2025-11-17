@@ -25,10 +25,12 @@ public class Post {
    * @param text  Text of the post
    */
   public Post(String auth, String title, String text) {
+
     this.dateTime = new Time();
     setAuthor(auth);
     setTitle(title);
     setText(text);
+
   }
 
   /**
@@ -43,7 +45,6 @@ public class Post {
   public Post(String auth, String title, String text, String clock, String date) {
 
     this.dateTime = new Time(clock, date);
-
     setAuthor(auth);
     setTitle(title);
     setText(text);
@@ -89,14 +90,10 @@ public class Post {
    * @param auth Author name.
    */
   public void setAuthor(String auth) {
-    try {
-      if (auth.isEmpty()) {
-        throw new IllegalArgumentException("Author name is empty");
-      } else {
-        this.author =  new Author(auth);
-      }
-    } catch (Exception e) {
-      this.author = new Author("Author");
+    if (auth.isEmpty()) {
+      throw new IllegalArgumentException("Author name is empty");
+    } else {
+      this.author =  new Author(auth);
     }
   }
 
@@ -107,15 +104,12 @@ public class Post {
    * @param title Title.
    */
   public void setTitle(String title) {
-    try {
-      if (title.isEmpty()) {
-        throw new IllegalArgumentException("Title is empty");
-      } else {
-        this.title = title;
-      }
-    } catch (Exception e) {
-      this.title = "Title";
+    if (title.isEmpty()) {
+      throw new IllegalArgumentException("Title is empty");
+    } else {
+      this.title = title;
     }
+
   }
 
   /**
@@ -125,24 +119,10 @@ public class Post {
    * @param text Text.
    */
   public void setText(String text) {
-    try {
-      if (text.isEmpty()) {
-        throw new IllegalArgumentException("Text is empty");
-      } else {
-        this.text = text;
-      }
-    } catch (Exception e) {
-      this.text = "Text";
+    if (text.isEmpty()) {
+      throw new IllegalArgumentException("Text is empty");
+    } else {
+      this.text = text;
     }
-  }
-
-  /**
-   * Setter for date.
-   *
-   *
-   * @param date new date.
-   */
-  public void setDate(String date) {
-    this.dateTime.setDate(date);
   }
 }

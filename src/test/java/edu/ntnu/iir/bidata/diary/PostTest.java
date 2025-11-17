@@ -7,10 +7,12 @@ import static org.junit.Assert.*;
 public class PostTest {
   @Test
   public void TestCreateEmptyPost() {
-    Post test = new Post("", "", "");
-    assertFalse("Author is empty", test.getAuthor().getName().isEmpty());
-    assertFalse("Text is empty", test.getText().isEmpty());
-    assertFalse("Title is empty", test.getTitle().isEmpty());
+    try {
+      Post test = new Post("", "", "");
+      System.out.println(test.getAuthor().getName());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Author name is empty", e.getMessage());
+    }
   }
   @Test
   public void TestCreatePost() {

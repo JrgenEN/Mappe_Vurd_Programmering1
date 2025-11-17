@@ -25,15 +25,82 @@ public class TimeTest {
   public void TestCreateInvalidDate() {
     String testTime = "14:54";
     String testDate = "Invalid";
-    Time test = new Time(testTime, testDate);
-    assertNull(test.getDate());
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Use numbers for date", e.getMessage());
+    }
   }
 
   @Test
   public void TestCreateInvalidTime() {
     String testTime = "Invalid";
     String testDate = "13.10.2025";
-    Time test = new Time(testTime, testDate);
-    assertNull(test.getClock());
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid time format, use HH:mm", e.getMessage());
+    }
+  }
+
+  @Test
+  public void TestCreateNegativeDay() {
+    String testTime = "14:54";
+    String testDate = "-13.10.2025";
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid day, use 1-31", e.getMessage());
+    }
+  }
+
+  @Test
+  public void TestCreateInvalidMonth() {
+    String testTime = "14:54";
+    String testDate = "13.Invalid.2025";
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Use numbers for date", e.getMessage());
+    }
+  }
+  @Test
+  public void TestCreateNegativeMonth() {
+    String testTime = "14:54";
+    String testDate = "13.-10.2025";
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid month, use 1-12", e.getMessage());
+    }
+  }
+
+  @Test
+  public void TestCreateYearZero() {
+    String testTime = "14:54";
+    String testDate = "13.10.0";
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid year, use 1900-2025", e.getMessage());
+    }
+  }
+
+  @Test
+  public void TestInvalidFormat() {
+    String testTime = "14:54";
+    String testDate = "13.1";
+    try {
+      Time test = new Time(testTime, testDate);
+      System.out.println(test.getDate());
+    } catch (IllegalArgumentException e) {
+      assertEquals("Invalid date format, use dd.MM.yyyy", e.getMessage());
+    }
   }
 }
