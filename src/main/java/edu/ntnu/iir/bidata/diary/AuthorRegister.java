@@ -48,15 +48,18 @@ public class AuthorRegister {
    * @param post Add the {@code Post} to the {@code Diary}.
    */
   public boolean addDiaryPost(Post post) {
-    Author author = this.getAuthorByName(post.getAuthor().getName());
-    if (this.authorsDiary.containsKey(author)) {
-      return this.authorsDiary.get(author).addPost(post);
-    } else {
+    try {
+      Author author = this.getAuthorByName(post.getAuthor().getName());
+      if (this.authorsDiary.containsKey(author)) {
+        return this.authorsDiary.get(author).addPost(post);
+      }
+    } catch (Exception e) {
       Diary diary = new Diary();
       boolean ret = diary.addPost(post);
       this.authorsDiary.put(post.getAuthor(), diary);
       return ret;
     }
+    return false;
   }
 
   /**

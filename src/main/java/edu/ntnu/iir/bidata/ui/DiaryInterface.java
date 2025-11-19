@@ -130,23 +130,27 @@ public class DiaryInterface {
   private static void print() {
     System.out.println(AUTHOR);
     previousAuthors();
-    final String author = Author.formatName(Input.getInput());
+    try {
+      final String author = Author.formatName(Input.getInput());
 
 
-    if (authorRegister.getDiary(author) != null) {
-      printPreviousDates(author);
-      System.out.println(WRITE_DATE_OF_WRITTEN_POST + "\n" + USE_FORMAT);
-      String date = Input.getInput();
-      System.out.println();
-      if (authorRegister.getDiary(author).getPost(date) != null) {
-        printPost(authorRegister.getDiary(author).getPost(date));
+      if (authorRegister.getDiary(author) != null) {
+        printPreviousDates(author);
+        System.out.println(WRITE_DATE_OF_WRITTEN_POST + "\n" + USE_FORMAT);
+        String date = Input.getInput();
+        System.out.println();
+        if (authorRegister.getDiary(author).getPost(date) != null) {
+          printPost(authorRegister.getDiary(author).getPost(date));
+        } else {
+          System.out.println(NO_POST_FOUND);
+        }
       } else {
-        System.out.println(NO_POST_FOUND);
+        System.out.println(NO_AUTHOR_FOUND);
       }
-    } else {
-      System.out.println(NO_AUTHOR_FOUND);
+      System.out.println();
+    } catch (Exception e) {
+      System.out.println("Failed to print post: " + e.getMessage());
     }
-    System.out.println();
   }
 
 
