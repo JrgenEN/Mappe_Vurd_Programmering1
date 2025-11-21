@@ -98,7 +98,7 @@ public class Time {
    * @param t time
    * @param d date
    */
-  private void setDateTime(String t, String d) {
+  private void setDateTime(final String t, final String d) {
     final List<String> testD = Arrays.asList(d.split("\\."));
     final List<String> testT = Arrays.asList(t.split(":"));
     final int[] intDate = new int[3];
@@ -113,16 +113,25 @@ public class Time {
     this.clock = t;
     this.date = d;
 
-    if (testD.size() != 3) {
+    final int expectedDateSize = 3;
+    final int expectedTimeSize = 2;
+    final int maxDay = 31;
+    final int maxMonth = 12;
+    final int maxYear = 2025;
+    final int minDay = 1;
+    final int minMonth = 1;
+    final int minYear = 2000;
+
+    if (testD.size() != expectedDateSize) {
       throw new IllegalArgumentException("Invalid date format, use dd.MM.yyyy");
-    } else if (testT.size() != 2) {
+    } else if (testT.size() != expectedTimeSize) {
       throw new IllegalArgumentException("Invalid time format, use HH:mm");
-    } else if (intDate[0] > 31 || intDate[0] <= 0) {
-      throw new IllegalArgumentException("Invalid day, use 1-31");
-    } else if (intDate[1] > 12 || intDate[1] <= 0) {
-      throw new IllegalArgumentException("Invalid month, use 1-12");
-    } else if (intDate[2] > 2025 || intDate[2] <= 1900) {
-      throw new IllegalArgumentException("Invalid year, use 1900-2025");
+    } else if (intDate[0] > maxDay || intDate[0] < minDay) {
+      throw new IllegalArgumentException("Invalid day, use " + minDay + "-" + maxDay);
+    } else if (intDate[1] > maxMonth || intDate[1] < minMonth) {
+      throw new IllegalArgumentException("Invalid month, use " + minMonth + "-" + maxMonth);
+    } else if (intDate[2] > maxYear || intDate[2] < minYear) {
+      throw new IllegalArgumentException("Invalid year, use " + minYear + "-" + maxYear);
     }
   }
 }

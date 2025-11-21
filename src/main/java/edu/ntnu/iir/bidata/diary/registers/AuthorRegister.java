@@ -16,7 +16,7 @@ import java.util.Set;
  * @see Diary
  * @see HashSet
  * @see HashMap
- * @version 1.0
+ * @version 3.0
  */
 public class AuthorRegister {
   private final HashMap<Author, Diary>  authorsDiary;

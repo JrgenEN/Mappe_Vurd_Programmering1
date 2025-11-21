@@ -1,10 +1,9 @@
 package edu.ntnu.iir.bidata.diary.registers;
 
-import edu.ntnu.iir.bidata.diary.entry.Post;
-import edu.ntnu.iir.bidata.utility.Time;
-
 import static edu.ntnu.iir.bidata.utility.Constants.POST_ALREADY_EXIST;
 
+import edu.ntnu.iir.bidata.diary.entry.Post;
+import edu.ntnu.iir.bidata.utility.Time;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Class to make a diary with a HashMap of Posts.
  *
- * <p></p>
+ *
  * @author jorge
  *
  * @version 2.0

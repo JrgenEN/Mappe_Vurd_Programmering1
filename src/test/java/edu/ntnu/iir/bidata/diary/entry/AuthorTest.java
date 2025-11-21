@@ -14,18 +14,24 @@ class AuthorTest {
   private Author onlyBigLetters;
   private Author noBigLetters;
   private Author validName;
-  private Author emptyName;
 
   @BeforeEach
   void setUp() {
     onlyBigLetters = new Author(UPPERCASE_NAME);
     noBigLetters = new Author(LOWERCASE_NAME);
     validName = new Author(VALID_NAME);
-    emptyName = new Author(EMPTY_NAME);
+
   }
   @Test
   void TestEmptyName() {
-    assertEquals(EMPTY_NAME, emptyName.getName(), "Empty Name Failed");
+    try {
+      Author emptyName = new Author(EMPTY_NAME);
+      System.out.print(emptyName.getName()); // Should not reach this line.
+    } catch (Exception e) {
+      assertInstanceOf(IllegalArgumentException.class, e);
+    }
+
+
   }
 
   @Test

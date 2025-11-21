@@ -170,7 +170,7 @@ public class DiaryInterface {
   }
 
   /**
-   * Searches for keywords in all or authors posts and prints them.
+   * Searches for keywords in all or authors' posts and prints them.
    */
   private static void keyword() {
     Display.newLine();
@@ -317,7 +317,7 @@ public class DiaryInterface {
 
   /**
    * Gets the diary of an author and prints all posts.
-   * If no posts. it prints no posts found.
+   * If no posts, it prints no posts found.
    */
   private static void postByAuthor() {
     Display.newLine();

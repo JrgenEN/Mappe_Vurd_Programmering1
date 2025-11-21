@@ -38,7 +38,10 @@ public class Author {
    * @param name Name of the author.
    * @return Formated string with uppercase letters.
    */
-  public static String formatName(String name) {
+  public static String formatName(final String name) {
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Name is empty");
+    }
     String[] names = name.split(" ");
     String returnString = "";
     for (String s : names) {
@@ -62,9 +65,6 @@ public class Author {
    * @param name Name.
    */
   private void setName(String name) {
-    if (!name.isEmpty()) {
-      name = formatName(name);
-    }
-    this.name = name;
+    this.name = formatName(name);
   }
 }
