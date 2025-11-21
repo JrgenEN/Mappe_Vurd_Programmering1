@@ -31,6 +31,9 @@ public class Input {
 
     System.out.print("> ");
     String in = inp.nextLine();
+    if (in.isEmpty()) {
+      System.out.println("Empty input, try again.");
+    }
     return in.isEmpty() ? getInput() : in;
   }
 
