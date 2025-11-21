@@ -1,6 +1,9 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.diary.registers;
 
-import static edu.ntnu.iir.bidata.diary.Constants.POST_ALREADY_EXIST;
+import edu.ntnu.iir.bidata.diary.entry.Post;
+import edu.ntnu.iir.bidata.utility.Time;
+
+import static edu.ntnu.iir.bidata.utility.Constants.POST_ALREADY_EXIST;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +16,7 @@ import java.util.List;
 /**
  * Class to make a diary with a HashMap of Posts.
  *
- *
+ * <p></p>
  * @author jorge
  *
  * @version 2.0
@@ -64,7 +67,6 @@ public class Diary {
         throw new IllegalArgumentException(POST_ALREADY_EXIST);
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
       return false;
     }
     return true;
@@ -88,10 +90,8 @@ public class Diary {
         this.posts.put(date, post);
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
       return false;
     }
-
     return true;
   }
 
@@ -106,7 +106,7 @@ public class Diary {
     if (this.posts.get(date) != null) {
       return this.posts.get(date);
     }
-    return null;
+    throw new IllegalArgumentException("No post found");
   }
 
   /**
@@ -199,8 +199,7 @@ public class Diary {
     if (this.posts.containsKey(date)) {
       this.posts.remove(date);
       return true;
-    } else {
-      throw new IllegalArgumentException("No post's on " + date);
     }
+    return false;
   }
 }

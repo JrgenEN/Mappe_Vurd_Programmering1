@@ -1,4 +1,6 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.diary.entry;
+
+import edu.ntnu.iir.bidata.utility.Time;
 
 /**
  * Class to handle posts.

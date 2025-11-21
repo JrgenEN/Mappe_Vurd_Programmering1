@@ -1,4 +1,4 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.utility;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

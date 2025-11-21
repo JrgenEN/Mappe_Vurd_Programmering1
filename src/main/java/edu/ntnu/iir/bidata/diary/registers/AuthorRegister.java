@@ -1,5 +1,7 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.diary.registers;
 
+import edu.ntnu.iir.bidata.diary.entry.Author;
+import edu.ntnu.iir.bidata.diary.entry.Post;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,7 +87,10 @@ public class AuthorRegister {
    * @return Returns a {@code Collection<>()} of Diary's.
    */
   public Collection<Diary> getAllDiary() {
-    return this.authorsDiary.values();
+    if (!this.authorsDiary.isEmpty()) {
+      return this.authorsDiary.values();
+    }
+    throw new IllegalArgumentException("No authors in the register");
   }
 
   /**
