@@ -1,7 +1,6 @@
 package edu.ntnu.iir.bidata.ui;
 
 import static edu.ntnu.iir.bidata.utility.Constants.*;
-import static edu.ntnu.iir.bidata.utility.Constants.USE_FORMAT;
 
 /**
  * Class to handle display.

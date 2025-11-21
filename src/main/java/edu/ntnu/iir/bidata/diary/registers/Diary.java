@@ -146,9 +146,11 @@ public class Diary {
     LocalDate endDate = end.toLocalDate();
 
     for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-      Post post = this.getPost(date.format(fmt));
-      if (post != null) {
+      try {
+        Post post = this.getPost(date.format(fmt));
         allPosts.add(post);
+      } catch (IllegalArgumentException ignored) {
+        // it is empty to handle the exception from getPost(date).
       }
     }
     if (!allPosts.isEmpty()) {

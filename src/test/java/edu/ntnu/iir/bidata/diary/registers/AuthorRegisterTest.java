@@ -1,14 +1,15 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.diary.registers;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import edu.ntnu.iir.bidata.diary.entry.Post;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
-public class AuthorRegisterTest {
+class AuthorRegisterTest {
   private static final String NAME_FORMATTED = "Test";
   private static final String NAME_UPPERCASE = "TEST";
   private static final String NAME_LOWERCASE = "test";
@@ -25,8 +26,8 @@ public class AuthorRegisterTest {
 
   private AuthorRegister authorRegister;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     authorRegister = new AuthorRegister();
 
     Post post1 = new Post(NAME_FORMATTED, TITLE, TEXT, TIME, DATE_FIRST);
@@ -41,15 +42,16 @@ public class AuthorRegisterTest {
   }
 
   @Test
-  public void TestAddingSameAuthorWithDifferentFormats() {
+  void TestAddingSameAuthorWithDifferentFormats() {
     final int EXPECTED_DIARY_POSTS = 4;
 
-    assertEquals("Different Authors for the same name",
-            EXPECTED_DIARY_POSTS, authorRegister.getDiary(NAME_FORMATTED).getAllPosts().size());
+    assertEquals(EXPECTED_DIARY_POSTS,
+        authorRegister.getDiary(NAME_FORMATTED).getAllPosts().size(),
+        "Different Authors for the same name");
   }
 
   @Test
-  public void TestAddingNewAuthor() {
+  void TestAddingNewAuthor() {
     final String NAME = "Test To";
     final int EXPECTED_DIARY_POSTS = 1;
 
@@ -57,22 +59,19 @@ public class AuthorRegisterTest {
 
     authorRegister.addDiaryPost(post);
 
-    assertEquals("Something wrong with adding second author",
-            EXPECTED_DIARY_POSTS, authorRegister.getDiary(NAME).getAllPosts().size());
+    assertEquals(EXPECTED_DIARY_POSTS,
+        authorRegister.getDiary(NAME).getAllPosts().size(),
+        "Something wrong with adding second author");
   }
 
   @Test
-  public void TestGettingDiaryByInvalidName() {
-    try {
-      authorRegister.getDiary("");
-    } catch (Exception e) {
-      assertEquals("No diary for ", e.getMessage());
-    }
-
+  void TestGettingDiaryByInvalidName() {
+    Exception e = assertThrows(Exception.class, () -> authorRegister.getDiary(""));
+    assertEquals("No diary for ", e.getMessage());
   }
 
   @Test
-  public void TestGettingStatistics() {
+  void TestGettingStatistics() {
     Map<String, Integer> statistics = authorRegister.getStatistics();
 
     String[] names = statistics.keySet().toArray(new String[0]);

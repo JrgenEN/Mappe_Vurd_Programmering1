@@ -216,12 +216,15 @@ public class DiaryInterface {
     try {
       final Collection<Diary> d = n ? List.of(register.getDiary(a)) : register.getAllDiary();
       Display.newLine();
+
       printPreviousDates(a);
       Display.useFormat();
       Display.message("Type start date: ");
       String startDate = Input.getInput();
+
       Display.message("Type end date: ");
       String endDate = Input.getInput();
+
       String time = new Time().getClock();
       Time start = new Time(time, startDate);
       Time end = new Time(time, endDate);

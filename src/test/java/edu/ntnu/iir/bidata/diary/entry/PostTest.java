@@ -1,12 +1,14 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.diary.entry;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class PostTest {
+class PostTest {
+
+
   @Test
-  public void TestCreateEmptyPost() {
+  void TestCreateEmptyPost() {
     try {
       Post test = new Post("", "", "");
       System.out.println(test.getAuthor().getName());
@@ -15,7 +17,7 @@ public class PostTest {
     }
   }
   @Test
-  public void TestCreatePost() {
+  void TestCreatePost() {
     Post test = new Post("Jørgen", "Title Test", "Text test need to make it a bit longer");
     assertEquals("Jørgen", test.getAuthor().getName());
     assertEquals("Title Test", test.getTitle());

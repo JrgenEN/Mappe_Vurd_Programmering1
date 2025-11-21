@@ -1,11 +1,11 @@
-package edu.ntnu.iir.bidata.diary;
+package edu.ntnu.iir.bidata.diary.entry;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class AuthorTest {
+class AuthorTest {
   private static final String UPPERCASE_NAME = "TEST NAME";
   private static final String LOWERCASE_NAME = "test name";
   private static final String VALID_NAME = "Test Name";
@@ -16,32 +16,32 @@ public class AuthorTest {
   private Author validName;
   private Author emptyName;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     onlyBigLetters = new Author(UPPERCASE_NAME);
     noBigLetters = new Author(LOWERCASE_NAME);
     validName = new Author(VALID_NAME);
     emptyName = new Author(EMPTY_NAME);
   }
   @Test
-  public void TestEmptyName() {
-    assertEquals("Empty Name Failed", EMPTY_NAME, emptyName.getName());
+  void TestEmptyName() {
+    assertEquals(EMPTY_NAME, emptyName.getName(), "Empty Name Failed");
   }
 
   @Test
-  public void TestFormattingUppercaseName() {
+  void TestFormattingUppercaseName() {
     System.out.println(onlyBigLetters.getName());
-    assertEquals("Formatting failed", VALID_NAME, onlyBigLetters.getName());
+    assertEquals(VALID_NAME, onlyBigLetters.getName(),"Formatting failed");
   }
 
   @Test
-  public void TestFormattingForNoBigLetters() {
+  void TestFormattingForNoBigLetters() {
     System.out.println(noBigLetters.getName());
-    assertEquals("Formatting failed", VALID_NAME, noBigLetters.getName());
+    assertEquals(VALID_NAME, noBigLetters.getName(),"Formatting failed");
   }
   @Test
-  public void TestFormattingForValidName() {
+  void TestFormattingForValidName() {
     System.out.println(validName.getName());
-    assertEquals("Valid Name Failed", VALID_NAME, validName.getName());
+    assertEquals( VALID_NAME, validName.getName(), "Valid Name Failed");
   }
 }
