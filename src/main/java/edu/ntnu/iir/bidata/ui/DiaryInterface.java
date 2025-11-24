@@ -31,16 +31,18 @@ import java.util.Set;
 public class DiaryInterface {
   private static AuthorRegister register;
 
-  /**
-   * Initialize the Interface.
-   */
   private DiaryInterface() {}
 
   /**
    * Initializing the register class.
    */
   public static void init() {
-    register = new AuthorRegister();
+    try {
+      register = FileSave.parseFilesContent();
+    } catch (Exception e) {
+      register = new AuthorRegister();
+    }
+
     Display.message("Hello, welcome to the diary!");
   }
 
@@ -145,9 +147,11 @@ public class DiaryInterface {
       Display.writeDateAndFormat();
       String date = Input.getInput();
       Display.newLine();
+      Post post = diary.getPost(date);
       if (!diary.removePost(date)) {
         Display.noPostFound();
       } else {
+        FileSave.deleteText(author, post.toString());
         Display.message("Post removed successfully!");
       }
     } catch (Exception e) {
@@ -161,13 +165,17 @@ public class DiaryInterface {
    * Function to handle printing of all posts.
    */
   private static void all() {
-    register.getAllDiary().forEach(diary -> {
-      Display.newLine();
-      diary.getAllPosts().forEach(post -> {
-        printPost(post);
+    try {
+      register.getAllDiary().forEach(diary -> {
         Display.newLine();
+        diary.getAllPosts().forEach(post -> {
+          printPost(post);
+          Display.newLine();
+        });
       });
-    });
+    } catch (Exception e) {
+      Display.message(e.getMessage());
+    }
   }
 
   /**

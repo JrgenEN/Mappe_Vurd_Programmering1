@@ -17,10 +17,10 @@ public class Post {
   private Author author;
   private String title;
   private String text;
-  private final Time dateTime;
+  private Time dateTime;
 
   /**
-   * Constructor for post Class.
+   * Constructor for post-Class.
    *
    * @param auth  Author of the post
    * @param title Title of the post
@@ -28,7 +28,8 @@ public class Post {
    */
   public Post(String auth, String title, String text) {
 
-    this.dateTime = new Time();
+    Time time = new Time();
+    setDateTime(time.getClock(), time.getDate());
     setAuthor(auth);
     setTitle(title);
     setText(text);
@@ -46,10 +47,19 @@ public class Post {
    */
   public Post(String auth, String title, String text, String clock, String date) {
 
-    this.dateTime = new Time(clock, date);
+    setDateTime(clock, date);
     setAuthor(auth);
     setTitle(title);
     setText(text);
+  }
+
+  /**
+   * Constructor for post-Class with a post-string.
+   *
+   * @param post post-string.
+   */
+  public Post(String post) {
+    stringToPost(post);
   }
 
   /**
@@ -127,4 +137,38 @@ public class Post {
       this.text = text;
     }
   }
+
+  /**
+   * Setter for time and date.
+   *
+   * @param time Time of post.
+   * @param date Date of post.
+   */
+  private void setDateTime(String time, String date) {
+    if (time.isEmpty() || date.isEmpty()) {
+      throw new IllegalArgumentException("Time and date is empty");
+    } else {
+      this.dateTime = new Time(time, date);
+    }
+  }
+
+  /**
+   * Function that converts a post formated string to a post-object.
+   * If the string is not formated correctly, it throws an exception.
+   *
+   * @param post post formated string.
+   */
+  private void stringToPost(String post) {
+    String[] parts = post.split("\n");
+    if (parts.length != 4) {
+      throw new IllegalArgumentException("Invalid post");
+    }
+    this.setTitle(parts[0]);
+    this.setText(parts[1]);
+    this.setAuthor(parts[2].split(":")[1].replaceFirst(" ", ""));
+    String[] timeParts = parts[3].split(" ");
+    this.setDateTime(timeParts[0], timeParts[1]);
+  }
+
+
 }

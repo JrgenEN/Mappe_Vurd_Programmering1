@@ -16,7 +16,7 @@ public class Main {
    * @param args Arguments
    */
   public static void main(String[] args) {
-    FileSave.init();
+    FileSave.init("Diary", "//");
     DiaryInterface.init();
     DiaryInterface.start();
   }
