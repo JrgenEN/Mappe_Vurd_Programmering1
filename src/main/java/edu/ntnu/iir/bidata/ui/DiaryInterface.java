@@ -6,6 +6,7 @@ import edu.ntnu.iir.bidata.diary.entry.Author;
 import edu.ntnu.iir.bidata.diary.entry.Post;
 import edu.ntnu.iir.bidata.diary.registers.AuthorRegister;
 import edu.ntnu.iir.bidata.diary.registers.Diary;
+import edu.ntnu.iir.bidata.utility.FileSave;
 import edu.ntnu.iir.bidata.utility.Time;
 import java.util.Arrays;
 import java.util.Collection;
@@ -264,8 +265,10 @@ public class DiaryInterface {
     Display.newLine();
 
     try {
-      if (register.addDiaryPost(new Post(author, title, text))) {
+      Post post = new Post(author, title, text);
+      if (register.addDiaryPost(post)) {
         Display.message("Post added successfully!");
+        FileSave.addText(post.getAuthor().getName(), post.toString());
       } else {
         Display.message("Failed to add post, only one post per day is allowed.");
         Display.message("Use forgot to add a post on a different day.");
@@ -303,8 +306,10 @@ public class DiaryInterface {
       printPreviousDates(author);
       String date = Input.getInput();
       String time = new Time().getClock();
-      if (register.addDiaryPost(new Post(author, title, text, time, date))) {
+      Post post = new Post(author, title, text, time, date);
+      if (register.addDiaryPost(post)) {
         Display.message("Post added successfully!");
+        FileSave.addText(post.getAuthor().getName(), post.toString());
       } else {
         Display.message("Failed to add post.");
       }
