@@ -82,7 +82,7 @@ class TimeTest {
       Time test = new Time(TEST_TIME, TEST_YEAR_ZERO);
       System.out.println(test.getDate());
     } catch (IllegalArgumentException e) {
-      assertEquals("Invalid year, use 1900-2025", e.getMessage());
+      assertEquals("Invalid year, use 2000-2025", e.getMessage());
     }
   }
 

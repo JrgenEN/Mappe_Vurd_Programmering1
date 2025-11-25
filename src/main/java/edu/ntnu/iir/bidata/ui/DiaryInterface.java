@@ -17,14 +17,22 @@ import java.util.Set;
 /**
  * Diary interface. Creates the interface and handles user input.
  *
+ * <p>Dependencies: {@link AuthorRegister}, {@link Diary}, {@link Input}.
+ *
+ * <p>Examples: <br>
+ *    1. {@code DiaryInterface.init();} <br>
+ *    2. {@code DiaryInterface.start();}
+ *
+ * </p>
+ *
  * @author jorge
  * @version 3.0
+ * @see AuthorRegister
  * @see Diary
+ * @see Input
  * @see Set
  * @see Arrays
  * @see Map
- * @see Input
- * @see AuthorRegister
  *
  * @since 1.0
  */
@@ -371,7 +379,7 @@ public class DiaryInterface {
   private static void previousAuthors() {
     if (!register.getAuthorsName().isEmpty()) {
       Display.previousAuthors();
-      register.getAuthorsName().forEach(System.out::println);
+      register.getAuthorsName().forEach(Display::message);
     }
   }
 
@@ -382,10 +390,10 @@ public class DiaryInterface {
       Display.message("Previous dates: ");
 
       diary.getAllDates().forEach(date ->
-          System.out.print(date + " ")
+          Display.msgNoln(date + " ")
       );
     } catch (Exception e) {
-      System.out.print(" ");
+      Display.msgNoln(" ");
     } finally {
       Display.newLine();
     }

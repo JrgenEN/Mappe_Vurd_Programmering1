@@ -11,9 +11,14 @@ import java.util.Set;
 /**
  * Class to make an author register of all authors and creates a diary for each new author.
  *
+ * <p>Dependencies: {@link Author} and {@link Diary}.
+ *
+ *</p>
+ *
  * @author Jørgen
  * @see Author
  * @see Diary
+ * @see Collection
  * @see HashSet
  * @see HashMap
  * @version 3.0
@@ -29,10 +34,10 @@ public class AuthorRegister {
   }
 
   /**
-   * Gets an {@code Map} of the stats of each {@code Author}.
+   * Gets an {@link Map} of the number of posts from each {@link Author}.
    *
    *
-   * @return {@code Map<String, Integer>}
+   * @return {@code Map}<{@code String}, {@code Integer}>
    */
   public Map<String, Integer> getStatistics() {
     Map<String, Integer> statistics = new HashMap<>();

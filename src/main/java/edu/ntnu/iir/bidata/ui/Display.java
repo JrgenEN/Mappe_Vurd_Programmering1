@@ -13,6 +13,15 @@ import static edu.ntnu.iir.bidata.utility.Constants.WRITE_DATE_OF_WRITTEN_POST;
 
 /**
  * Class to handle text output and output of literals.
+ *
+ * <p>Dependencies: {@link edu.ntnu.iir.bidata.utility.Constants}.
+ *
+ * </p>
+ *
+ * @author jorge
+ * @version 1.0
+ * @see edu.ntnu.iir.bidata.utility.Constants
+ * @since 1.0
  */
 public class Display {
   private Display() {}
@@ -39,6 +48,13 @@ public class Display {
    */
   public static void message(String message) {
     System.out.println(message);
+  }
+
+  /**
+   * Wrapper for System.out.print.
+   */
+  public static void msgNoln(String message) {
+    System.out.print(message);
   }
 
   /**

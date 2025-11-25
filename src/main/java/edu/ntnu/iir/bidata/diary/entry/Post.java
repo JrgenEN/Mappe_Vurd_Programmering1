@@ -3,8 +3,12 @@ package edu.ntnu.iir.bidata.diary.entry;
 import edu.ntnu.iir.bidata.utility.Time;
 
 /**
- * Class to handle posts.
+ * Class to create post.
+ * Is used as an entry class.
  *
+ * <p>Dependencies: {@link Author}, {@link Time}
+ *
+ * </p>
  *
  * @author jorge
  *
@@ -99,7 +103,7 @@ public class Post {
    * Setter for author.
    *
    *
-   * @param auth Author name.
+   * @param auth Author of post.
    */
   public void setAuthor(String auth) {
     if (auth.isEmpty()) {
@@ -113,7 +117,7 @@ public class Post {
    * Setter for title of post.
    *
    *
-   * @param title Title.
+   * @param title Title of post.
    */
   public void setTitle(String title) {
     if (title.isEmpty()) {
@@ -128,7 +132,7 @@ public class Post {
    * Setter for text.
    *
    *
-   * @param text Text.
+   * @param text Text of post.
    */
   public void setText(String text) {
     if (text.isEmpty()) {
@@ -169,6 +173,4 @@ public class Post {
     String[] timeParts = parts[3].split(" ");
     this.setDateTime(timeParts[0], timeParts[1]);
   }
-
-
 }

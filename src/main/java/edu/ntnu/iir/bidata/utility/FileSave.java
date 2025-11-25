@@ -14,8 +14,17 @@ import java.util.List;
 /**
  * Class to handle text to file saving.
  *
+ * <p>Example: <br>
+ *   1. {@code FileSave.init("diary", "---")} <br>
+ *   2. {@code FileSave.addText("test", "Hello World")} <br>
+ *   3. {@code FileSave.deleteText("test", "Hello World")} <br>
+ *   4. {@code AuthorRegister reg = FileSave.parseFilesContent();}
+ *
+ * </p>
+ *
  * @author jorge
  * @version 1.0
+ * @see AuthorRegister
  * @see Path
  * @see Files
  * @see StandardOpenOption

@@ -8,6 +8,9 @@ import java.util.Set;
 /**
  * Static class to handle user input.
  *
+ * <p>Example: {@code String usrInp = Input.getInput()}
+ *
+ * </p>
  *
  * @author jorge
  *
@@ -29,10 +32,10 @@ public class Input {
    */
   public static String getInput() {
 
-    System.out.print("> ");
+    Display.msgNoln("> ");
     String in = inp.nextLine();
     if (in.isEmpty()) {
-      System.out.println("Empty input, try again.");
+      Display.message("Empty input, try again.");
     }
     return in.isEmpty() ? getInput() : in;
   }
@@ -44,7 +47,7 @@ public class Input {
    * @return words Returns a HashSet of the input.
    */
   public static Set<String> getInputSet() {
-    System.out.print("> ");
+    Display.msgNoln("> ");
 
     String inputLine = inp.nextLine().trim().toLowerCase();
 

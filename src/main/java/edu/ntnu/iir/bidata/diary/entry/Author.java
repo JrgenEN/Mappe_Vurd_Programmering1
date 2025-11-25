@@ -3,10 +3,14 @@ package edu.ntnu.iir.bidata.diary.entry;
 /**
  * Class for authors.
  *
+ * <p>Example: {@code Author author = new Author("firstname lastname")}.
+ *
+ * </p>
  *
  * @author jorgen
  * @version 1.0
  * @see String
+ * @since 1.0
  */
 public class Author {
   private String name;
@@ -22,7 +26,7 @@ public class Author {
   }
 
   /**
-   * Getter for name.
+   * Gets the name.
    *
    *
    * @return this.name Returns name.
@@ -32,11 +36,10 @@ public class Author {
   }
 
   /**
-   * Formats the name to be Uppercase letter at the start.
-   *
+   * Formats the name to be in the format "Firstname Lastname".
    *
    * @param name Name of the author.
-   * @return Formated string with uppercase letters.
+   * @return Formated string.
    */
   public static String formatName(final String name) {
     if (name.isEmpty()) {
@@ -58,12 +61,8 @@ public class Author {
     return returnString;
   }
 
-  /**
-   * Sets the this.name as @param.
-   *
-   *
-   * @param name Name.
-   */
+  //  Setter for name.
+
   private void setName(String name) {
     this.name = formatName(name);
   }

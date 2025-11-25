@@ -13,16 +13,26 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Class to make a diary with a HashMap of Posts.
+ * A register class for post.
+ *
+ * <p>Only allows one post per date.
+ *
+ * <p>Dependencies: {@link Post}.
+ *
+ * <p>Examples: <br>
+ *   1. {@code Diary diary = new Diary();} <br>
+ *   2. {@code diary.addPost(new Post("Jorge", "Hello", "Hello You!", "09:11", "20.10.2025"));} <br>
+ *   3. {@code diary.getPost("20.10.2025");} Gets post at date 20.10.2025 <br>
+ *   4. {@code diary.remove{20.10.2025};} Removes post at date 20.10.2025.
+ * </p>
  *
  *
  * @author jorge
- *
  * @version 2.0
  * @see Post
  * @see HashMap
  * @see Collection
- * @see List
+ * @see ArrayList
  * @since 1.0
  */
 public class Diary {
@@ -37,7 +47,7 @@ public class Diary {
   }
 
   /**
-   * Add a post to the diary.
+   * Add a {@code Post} to the diary.
    *
    * @param author Author of the post
    * @param title  Title of the post
@@ -54,11 +64,12 @@ public class Diary {
   }
 
   /**
-   * Adds a post to the diary.
+   * Adds a {@code Post} to the diary.
    *
    * @param post Post you want to add to the diary.
    */
   public boolean addPost(Post post) {
+    boolean retValue = true;
     try {
       if (!posts.containsKey(post.getDate())) {
         posts.put(post.getDate(), post);
@@ -66,13 +77,13 @@ public class Diary {
         throw new IllegalArgumentException(POST_ALREADY_EXIST);
       }
     } catch (Exception e) {
-      return false;
+      retValue = false;
     }
-    return true;
+    return retValue;
   }
 
   /**
-   * Add a post to the diary.
+   * Add a {@code Post} to the diary.
    *
    * @param author Author of the post
    * @param title  Title of the post
@@ -81,6 +92,7 @@ public class Diary {
    * @param date   Date of the post
    */
   public boolean addPost(String author, String title, String text, String time, String date) {
+    boolean retValue = true;
     try {
       if (posts.containsKey(date)) {
         throw new IllegalArgumentException("Already a post on this date!");
@@ -89,17 +101,21 @@ public class Diary {
         this.posts.put(date, post);
       }
     } catch (Exception e) {
-      return false;
+      retValue = false;
     }
-    return true;
+    return retValue;
   }
 
   /**
-   * Gets a specific post on a date.
+   * Gets a {@code Post} at param date.
+   *
+   * <p>Example: {@code getPost(25.11.2025)}
+   *
+   * </p>
    *
    *
    * @param date The date of the wanted post
-   * @return The post on the date specified or null if not a valid date
+   * @return The post on the date specified or throws {@link IllegalArgumentException}.
    */
   public Post getPost(String date) {
     if (this.posts.get(date) != null) {
@@ -111,9 +127,12 @@ public class Diary {
   /**
    * Search for posts with a keyword.
    *
+   * <p>Example: {@code getPostByKeyWord("hello")}
    *
-   * @param keyword Keyword you want to search for.
-   * @return Returns the post, and null if no posts.
+   * </p>
+   *
+   * @param keyword Keyword you want to search for in posts.
+   * @return Returns the {@link Post} or throws {@link IllegalArgumentException}.
    */
   public Post getPostByKeyWord(String keyword) {
     Post tempPost = null;
@@ -132,10 +151,14 @@ public class Diary {
   /**
    * Gets the posts between to dates.
    *
+   * <p>Example: {@code getPostBetweenDates(new Time("25.11.2025"), new Time("26.11.2025"))}
+   *
+   * </p>
+   *
    *
    * @param start Start date.
    * @param end End date.
-   * @return Collection of the dates between end and start. If none returns an empty Collection.
+   * @return {@link Collection} of the dates between end and start. If none returns an empty.
    */
   public Collection<Post> getPostBetweenDates(Time start, Time end) {
     List<Post> allPosts = new ArrayList<>();
@@ -163,8 +186,7 @@ public class Diary {
    * Gets all the posts in the diary.
    *
    *
-   * @return A collection with all the posts in the diary
-   *
+   * @return A collection with all the posts in the diary.
    */
   public Collection<Post> getAllPosts() {
     final ArrayList<String> keys = new ArrayList<>(this.posts.keySet());
@@ -179,7 +201,11 @@ public class Diary {
   /**
    * Gets all the dates and sorts them.
    *
-   * @return dates as a Collection.
+   * <p>Example: {@code ["25.11.2025", "26.11.2025"]}
+   *
+   * </p>
+   *
+   * @return dates as a Collection of Strings.
    */
   public Collection<String> getAllDates() {
     final ArrayList<String> dates = new ArrayList<>(this.posts.keySet());
@@ -197,10 +223,11 @@ public class Diary {
    * @param date Date of the post
    */
   public boolean removePost(String date) {
+    boolean returnVal = false;
     if (this.posts.containsKey(date)) {
       this.posts.remove(date);
-      return true;
+      returnVal = true;
     }
-    return false;
+    return returnVal;
   }
 }
